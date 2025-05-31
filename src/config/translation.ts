@@ -258,6 +258,12 @@ export const translations: Translations = {
     Igbo: 'Iji jikọọ gị na ọrụ, anyị chọrọ nkwenye gị iji kesaa nkọwa gị.',
     Hausa: 'Don haɗa ku da sabis, muna buƙatar izinin ku don raba bayananku.'
   },
+  prompt_need_support_incident: {
+    English: 'Would you like support or help for this incident?',
+    Yoruba: 'Ṣe o fẹ́ àtìlẹyìn tàbí ìrànlọ́wọ́ fún ìṣẹ̀lẹ̀ yìí?',
+    Igbo: 'Ị chọrọ nkwado ma ọ bụ enyemaka maka ihe omume a?',
+    Hausa: 'Kuna son tallafi ko taimako game da wannan lamarin?'
+  },
   message_report_submitted: {
     English: 'Thank you. Your report has been submitted. Your Reference ID is: {0}.',
     Yoruba: 'A dúpẹ́. A ti gba ìròyìn yín. Nọ́mbà àmì rẹ ni: {0}.',
