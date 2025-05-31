@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { config } from '../config';
 // import { IncidentReport } from '../../models/incidentReport.model'; // Assuming you have a session/temp storage
 
-const WHATSAPP_ACCESS_TOKEN = process.env.WHATSAPP_ACCESS_TOKEN;
-const FCTA_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID; // The Bot's WhatsApp Phone Number ID
+const WHATSAPP_ACCESS_TOKEN = config.whatsappAccessToken;
+const FCTA_PHONE_NUMBER_ID = config.whatsappPhoneNumberId; // The Bot's WhatsApp Phone Number ID
 
 // Temporary in-memory store for conversation state. In production, use Redis or a DB.
 interface UserSession {
@@ -21,6 +22,24 @@ const whatsappAPI = axios.create({
     'Content-Type': 'application/json'
   }
 });
+
+const translations: Record<string, Record<string, string>> = {
+  welcome_message: {
+    English: 'Welcome to the FCTA GBV Reporting Center. Please select your language:',
+    Yoruba: 'Ẹ ku abọ si Ile-iṣẹ Iroyin GBV ti FCTA. Jọwọ yan èdè rẹ:',
+    Igbo: 'Nnọọ na FCTA GBV Reporting Center. Biko họrọ asụsụ gị:',
+    Hausa: 'Barka da zuwa Cibiyar Rahoto ta GBV ta FCTA. Don Allah zaɓi harshenka:'
+  },
+  select_language_button: { English: 'Select Language', Yoruba: 'Yan Ede', Igbo: 'Họrọ Asụsụ', Hausa: 'Zaɓi Harshe' },
+  language_section_title: { English: 'Available Languages', Yoruba: 'Àwọn Èdè Tó Wà', Igbo: 'Asụsụ Dị', Hausa: 'Harsunan da ke Akwai' }
+  // ... all your other translations ...
+};
+
+const t = (key: string, lang: UserSession['language'] = 'English', ...args: string[]): string => {
+  const effectiveLang = lang || 'English';
+  const translation = translations[key]?.[effectiveLang] || translations[key]?.['English'] || `Untranslated: ${key}`;
+  return args.reduce((acc, arg, index) => acc.replace(`{${index}}`, arg), translation);
+};
 
 export const sendWhatsAppMessage = async (to: string, message: any) => {
   try {
@@ -379,22 +398,44 @@ const getLocalizedText = (key: string, lang: UserSession['language'] = 'English'
   return text;
 };
 
+// const sendLanguageSelection = async (to: string) => {
+//   const interactive = {
+//     type: 'button',
+//     body: { text: getLocalizedText('welcome_message') },
+//     action: {
+//       buttons: [
+//         { type: 'reply', reply: { id: 'english', title: 'English' } },
+//         { type: 'reply', reply: { id: 'yoruba', title: 'Yoruba' } },
+//         { type: 'reply', reply: { id: 'igbo', title: 'Igbo' } },
+//         { type: 'reply', reply: { id: 'hausa', title: 'Hausa' } }
+//       ]
+//     }
+//   };
+//   await sendInteractiveMessage(to, interactive);
+// };
+// Replace the old sendLanguageSelection function with this one
+
 const sendLanguageSelection = async (to: string) => {
   const interactive = {
-    type: 'button',
-    body: { text: getLocalizedText('welcome_message') },
+    type: 'list', // Changed from 'button' to 'list'
+    body: { text: t('welcome_message') }, // This translation key already exists
     action: {
-      buttons: [
-        { type: 'reply', reply: { id: 'english', title: 'English' } },
-        { type: 'reply', reply: { id: 'yoruba', title: 'Yoruba' } },
-        { type: 'reply', reply: { id: 'igbo', title: 'Igbo' } },
-        { type: 'reply', reply: { id: 'hausa', title: 'Hausa' } }
+      button: t('select_language_button'), // The text on the button that opens the list
+      sections: [
+        {
+          title: t('language_section_title'), // The title of the list section
+          rows: [
+            { id: 'english', title: 'English' },
+            { id: 'yoruba', title: 'Yoruba' },
+            { id: 'igbo', title: 'Igbo' },
+            { id: 'hausa', title: 'Hausa' }
+          ]
+        }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
-
 const promptAnonymity = async (to: string, lang: UserSession['language']) => {
   const interactive = {
     type: 'button',
