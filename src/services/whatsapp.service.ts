@@ -140,15 +140,21 @@ export const promptIncidentOrHelp = async (to: string, lang: Language) => {
  */
 export const promptIncidentTime = async (to: string, lang: Language) => {
   const interactive = {
-    type: 'button',
+    type: 'list',
     body: { text: t('incident_time_prompt', lang) },
     action: {
-      buttons: [
-        { type: 'reply', reply: { id: 'Morning', title: t('morning_option', lang) } },
-        { type: 'reply', reply: { id: 'Afternoon', title: t('afternoon_option', lang) } },
-        { type: 'reply', reply: { id: 'Evening', title: t('evening_option', lang) } },
-        { type: 'reply', reply: { id: 'Night', title: t('night_option', lang) } },
-        { type: 'reply', reply: { id: 'Nottip:Not_Sure_Time', title: t('not_sure_option', lang) } }
+      button: t('select_time_button', lang),
+      sections: [
+        {
+          title: t('time_section_title', lang),
+          rows: [
+            { id: 'Morning', title: t('morning_option', lang) },
+            { id: 'Afternoon', title: t('afternoon_option', lang) },
+            { id: 'Evening', title: t('evening_option', lang) },
+            { id: 'Night', title: t('night_option', lang) },
+            { id: 'Not_Sure_Time', title: t('not_sure_option', lang) }
+          ]
+        }
       ]
     }
   };

@@ -407,23 +407,6 @@ const getLocalizedText = (key: string, lang: UserSession['language'] = 'English'
   return text;
 };
 
-// const sendLanguageSelection = async (to: string) => {
-//   const interactive = {
-//     type: 'button',
-//     body: { text: getLocalizedText('welcome_message') },
-//     action: {
-//       buttons: [
-//         { type: 'reply', reply: { id: 'english', title: 'English' } },
-//         { type: 'reply', reply: { id: 'yoruba', title: 'Yoruba' } },
-//         { type: 'reply', reply: { id: 'igbo', title: 'Igbo' } },
-//         { type: 'reply', reply: { id: 'hausa', title: 'Hausa' } }
-//       ]
-//     }
-//   };
-//   await sendInteractiveMessage(to, interactive);
-// };
-// Replace the old sendLanguageSelection function with this one
-
 const sendLanguageSelection = async (to: string) => {
   const interactive = {
     type: 'list', // Changed from 'button' to 'list'
@@ -476,7 +459,7 @@ const promptIncidentOrHelp = async (to: string, lang: UserSession['language']) =
 
 const promptIncidentTime = async (to: string, lang: UserSession['language']) => {
   const interactive = {
-    type: 'button',
+    type: 'list',
     body: { text: getLocalizedText('incident_time_prompt', lang) },
     action: {
       buttons: [

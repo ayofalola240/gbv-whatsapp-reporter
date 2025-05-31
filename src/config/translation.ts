@@ -207,6 +207,18 @@ export const translations: Translations = {
     Yoruba: 'Ṣayẹwo Ipò Ìròyìn',
     Igbo: 'Lelee ọnọdụ akụkọ',
     Hausa: 'Duba Matsayin Rahoto'
+  },
+  language_set_confirmation: {
+    English: 'Language set to {0}.',
+    Yoruba: 'Èdè ti yí padà sí {0}.',
+    Igbo: 'Atọọla asụsụ na {0}.',
+    Hausa: 'An saita harshe zuwa {0}.'
+  },
+  anonymous_confirmation: {
+    English: "That's okay. You can report anonymously.",
+    Yoruba: 'Kò burú. O le ṣe ìròyìn láì sọ orúkọ rẹ.',
+    Igbo: 'Ọ dị mma. Ị nwere ike ịkọ akụkọ na-amaghị aha gị.',
+    Hausa: 'Hakan yayi daidai. Kuna iya bayar da rahoto ba tare da an san ku ba.'
   }
 
   // --- Add all other translations here ---
