@@ -183,6 +183,24 @@ export const translations: Translations = {
   // --- List Sections & Rows (Row titles <= 24 chars) ---
   section_languages: { English: 'Available Languages', Yoruba: 'Àwọn Èdè Tó Wà', Igbo: 'Asụsụ Dị', Hausa: 'Harsunan da ke Akwai' },
   section_time_of_day: { English: 'Time of Day', Yoruba: 'Àsìkò Ọjọ́', Igbo: 'Oge Ụbọchị', Hausa: 'Lokacin Rana' },
+  section_violence_types: {
+    English: 'Types of Violence',
+    Yoruba: 'Àwọn Irú Ìwà Ipá',
+    Igbo: 'Ụdị Ime Ihe Ike',
+    Hausa: "Nau'o'in Rikici"
+  },
+  section_relationship_types: {
+    English: 'Perpetrator Relationship',
+    Yoruba: 'Ibatan sí Olùṣebi',
+    Igbo: 'Mmekọrịta Onye Mere Ya',
+    Hausa: 'Dangantaka da Mai Laifi'
+  },
+  section_support_services: {
+    English: 'Available Support',
+    Yoruba: 'Ìrànlọ́wọ́ Tó Wà',
+    Igbo: 'Nkwado Dị',
+    Hausa: 'Taimakon da ke Akwai'
+  },
   option_morning: { English: 'Morning', Yoruba: 'Òwúrọ̀', Igbo: 'Ụtụtụ', Hausa: 'Safe' },
   option_afternoon: { English: 'Afternoon', Yoruba: 'Ọ̀sán', Igbo: 'Ehihie', Hausa: 'Rana' },
   option_evening: { English: 'Evening', Yoruba: 'Alẹ́', Igbo: 'Mgbede', Hausa: 'Maraice' },
