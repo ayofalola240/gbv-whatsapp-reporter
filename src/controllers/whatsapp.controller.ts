@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { processMessage } from '../services/whatsapp.service'; // You'll create this service
+import { config } from '../config';
 
-const WHATSAPP_VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN;
+const WHATSAPP_VERIFY_TOKEN = config.whatsappVerifyToken; // Ensure this is set in your config
 
 export const verifyWebhook = (req: Request, res: Response) => {
   const mode = req.query['hub.mode'];

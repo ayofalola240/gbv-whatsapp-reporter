@@ -8,7 +8,7 @@ const startServer = async () => {
   app
     .listen(config.port, () => {
       logger.info(`Server listening on http://localhost:${config.port}`);
-      logger.info(`WhatsApp Webhook should be configured to: http://<YOUR_PUBLIC_URL>/api/webhook/whatsapp`);
+      logger.info(`WhatsApp Webhook should be configured to: ${config.publicUrl}/api/webhook/whatsapp`);
     })
     .on('error', (err: any) => {
       if (err.code === 'EADDRINUSE') {
