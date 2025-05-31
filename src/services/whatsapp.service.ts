@@ -9,7 +9,6 @@ import { t, Language } from '../config/translation';
 const WHATSAPP_ACCESS_TOKEN = config.whatsappAccessToken;
 const FCTA_PHONE_NUMBER_ID = config.whatsappPhoneNumberId;
 
-// Create an Axios instance for the WhatsApp API
 const whatsappAPI = axios.create({
   baseURL: `https://graph.facebook.com/v19.0/${FCTA_PHONE_NUMBER_ID}`,
   headers: {
@@ -18,12 +17,6 @@ const whatsappAPI = axios.create({
   }
 });
 
-/**
- * A generic function to send a message to the WhatsApp API.
- * @param to The recipient's phone number.
- * @param message The message object (can be text, interactive, etc.).
- * @returns The response data from the API.
- */
 export const sendWhatsAppMessage = async (to: string, message: any) => {
   try {
     const payload = {
@@ -40,42 +33,27 @@ export const sendWhatsAppMessage = async (to: string, message: any) => {
   }
 };
 
-/**
- * Sends a simple text message.
- * @param to The recipient's phone number.
- * @param text The text to send.
- */
 export const sendTextMessage = async (to: string, text: string) => {
   return sendWhatsAppMessage(to, { type: 'text', text: { body: text } });
 };
 
-/**
- * Sends an interactive message.
- * @param to The recipient's phone number.
- * @param interactive The interactive message payload.
- */
 export const sendInteractiveMessage = async (to: string, interactive: any) => {
   return sendWhatsAppMessage(to, { type: 'interactive', interactive });
 };
 
-// --- Prompt Sending Functions ---
+// --- Prompt Sending Functions (Corrected) ---
 
-// --- Prompt Sending Functions ---
-
-/**
- * Sends the initial language selection list.
- * @param to The recipient's phone number.
- */
 export const sendLanguageSelection = async (to: string) => {
   const interactive = {
     type: 'list',
-    body: { text: t('welcome_message') },
+    body: { text: t('prompt_welcome') }, // CHANGED
     action: {
-      button: t('select_language_button'),
+      button: t('button_select_language'),
       sections: [
         {
-          title: t('language_section_title'),
+          title: t('section_languages'),
           rows: [
+            // These IDs are correct as they match the logic in the controller
             { id: 'english', title: 'English' },
             { id: 'yoruba', title: 'Yoruba' },
             { id: 'igbo', title: 'Igbo' },
@@ -88,71 +66,53 @@ export const sendLanguageSelection = async (to: string) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the anonymity prompt with buttons.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptAnonymity = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('anonymity_prompt', lang) },
+    body: { text: t('prompt_anonymity', lang) },
     action: {
       buttons: [
-        {
-          type: 'reply',
-          reply: { id: 'remain_anonymous', title: t('remain_anonymous_option', lang) }
-        },
-        {
-          type: 'reply',
-          reply: { id: 'share_details', title: t('share_details_option', lang) }
-        }
+        // CHANGED: Using consistent option keys for IDs and titles
+        { type: 'reply', reply: { id: 'option_remain_anonymous', title: t('option_remain_anonymous', lang) } },
+        { type: 'reply', reply: { id: 'option_share_details', title: t('option_share_details', lang) } }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the main menu prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptIncidentOrHelp = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('incident_or_help_prompt', lang) },
+    body: { text: t('prompt_main_menu', lang) }, // CHANGED
     action: {
       buttons: [
-        { type: 'reply', reply: { id: 'report_incident', title: t('report_incident_option', lang) } },
-        { type: 'reply', reply: { id: 'request_help', title: t('request_help_option', lang) } },
-        { type: 'reply', reply: { id: 'check_status', title: t('check_status_option', lang) } }
+        // CHANGED: Using consistent option keys for IDs
+        { type: 'reply', reply: { id: 'option_report_incident', title: t('option_report_incident', lang) } },
+        { type: 'reply', reply: { id: 'option_request_help', title: t('option_request_help', lang) } },
+        { type: 'reply', reply: { id: 'option_check_status', title: t('option_check_status', lang) } }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the incident time prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptIncidentTime = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('incident_time_prompt', lang) },
+    body: { text: t('prompt_incident_time', lang) }, // CHANGED
     action: {
-      button: t('select_time_button', lang),
+      button: t('button_select_time'), // CHANGED
       sections: [
         {
-          title: t('time_section_title', lang),
+          title: t('section_time_of_day', lang), // CHANGED
           rows: [
-            { id: 'Morning', title: t('morning_option', lang) },
-            { id: 'Afternoon', title: t('afternoon_option', lang) },
-            { id: 'Evening', title: t('evening_option', lang) },
-            { id: 'Night', title: t('night_option', lang) },
-            { id: 'Not_Sure_Time', title: t('not_sure_option', lang) }
+            // IDs are the actual data values, titles use translation keys
+            { id: 'Morning', title: t('option_morning', lang) },
+            { id: 'Afternoon', title: t('option_afternoon', lang) },
+            { id: 'Evening', title: t('option_evening', lang) },
+            { id: 'Night', title: t('option_night', lang) },
+            { id: 'Not_Sure_Time', title: t('option_not_sure', lang) }
           ]
         }
       ]
@@ -161,27 +121,22 @@ export const promptIncidentTime = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the exact location type prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptExactLocationType = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('exact_location_prompt', lang) },
+    body: { text: t('prompt_location_specific', lang) }, // CHANGED
     action: {
-      button: t('select_location_button', lang),
+      button: t('button_select_location'), // CHANGED
       sections: [
         {
-          title: t('location_section_title', lang),
+          title: t('section_location_types', lang), // CHANGED
           rows: [
-            { id: 'Home', title: t('home_option', lang) },
-            { id: 'School', title: t('school_option', lang) },
-            { id: 'Workplace', title: t('workplace_option', lang) },
-            { id: 'Street_or_Road', title: t('street_or_road_option', lang) },
-            { id: 'Perpetrators_house', title: t('perpetrators_house_option', lang) },
-            { id: 'other_location', title: t('other_location_option', lang) }
+            { id: 'Home', title: t('option_home', lang) },
+            { id: 'School', title: t('option_school', lang) },
+            { id: 'Workplace', title: t('option_workplace', lang) },
+            { id: 'Street_or_Road', title: t('option_street_road', lang) },
+            { id: 'Perpetrators_house', title: t('option_perpetrators_house', lang) },
+            { id: 'other_location', title: t('option_other', lang) }
           ]
         }
       ]
@@ -190,29 +145,25 @@ export const promptExactLocationType = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the violence type prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptViolenceType = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('violence_type_prompt', lang) },
+    body: { text: t('prompt_violence_type', lang) }, // CHANGED
     action: {
-      button: t('select_violence_button', lang),
+      button: t('button_select_violence'), // CHANGED
       sections: [
         {
-          title: t('violence_section_title', lang),
+          title: t('section_violence_types', lang), // Ensure this key exists in your translations
           rows: [
-            { id: 'Sexual_Assault', title: t('sexual_assault_option', lang) },
-            { id: 'Rape', title: t('rape_option', lang) },
-            { id: 'Defilement', title: t('defilement_option', lang) },
-            { id: 'Physical_Assault', title: t('physical_assault_option', lang) },
-            { id: 'Psychological_Abuse', title: t('psychological_abuse_option', lang) },
-            { id: 'Forced_Marriage', title: t('forced_marriage_option', lang) },
-            { id: 'Online_Harassment', title: t('online_harassment_option', lang) },
-            { id: 'other_violence', title: t('other_violence_option', lang) }
+            // Add corresponding 'option_*' keys to your translation file for these
+            { id: 'Sexual_Assault', title: 'Sexual Assault' }, // Example: t('option_sexual_assault', lang)
+            { id: 'Rape', title: 'Rape' },
+            { id: 'Defilement', title: 'Defilement' },
+            { id: 'Physical_Assault', title: 'Physical Assault' },
+            { id: 'Psychological_Abuse', title: 'Psychological Abuse' },
+            { id: 'Forced_Marriage', title: 'Forced Marriage' },
+            { id: 'Online_Harassment', title: 'Online Harassment' },
+            { id: 'other_violence', title: t('option_other', lang) }
           ]
         }
       ]
@@ -221,46 +172,38 @@ export const promptViolenceType = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the perpetrator known prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptPerpetratorKnown = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('perpetrator_known_prompt', lang) },
+    body: { text: t('prompt_perpetrator_known', lang) }, // CHANGED
     action: {
       buttons: [
-        { type: 'reply', reply: { id: 'yes_know_perpetrator', title: t('yes_option', lang) } },
-        { type: 'reply', reply: { id: 'no_know_perpetrator', title: t('no_option', lang) } }
+        // CHANGED: Using consistent option keys for IDs
+        { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
+        { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the perpetrator relationship prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptPerpetratorRelationship = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('perpetrator_relationship_prompt', lang) },
+    body: { text: t('prompt_perpetrator_relationship', lang) }, // CHANGED
     action: {
-      button: t('select_relationship_button', lang),
+      button: t('button_select_relationship'), // CHANGED
       sections: [
         {
-          title: t('relationship_section_title', lang),
+          title: t('section_relationship_types', lang), // Ensure this key exists
           rows: [
-            { id: 'Spouse_Partner', title: t('spouse_partner_option', lang) },
-            { id: 'Relative', title: t('relative_option', lang) },
-            { id: 'Teacher', title: t('teacher_option', lang) },
-            { id: 'Police_Authority', title: t('police_authority_option', lang) },
-            { id: 'Stranger', title: t('stranger_option', lang) },
-            { id: 'Other_Relationship', title: t('other_relationship_option', lang) }
+            // Add corresponding 'option_*' keys to your translation file for these
+            { id: 'Spouse_Partner', title: 'Spouse/Partner' },
+            { id: 'Relative', title: 'Relative' },
+            { id: 'Teacher', title: 'Teacher' },
+            { id: 'Police_Authority', title: 'Police/Authority' },
+            { id: 'Stranger', title: 'Stranger' },
+            { id: 'other_relationship', title: t('option_other', lang) }
           ]
         }
       ]
@@ -269,71 +212,59 @@ export const promptPerpetratorRelationship = async (to: string, lang: Language) 
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the media upload prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptMediaUpload = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('media_upload_prompt', lang) },
+    body: { text: t('prompt_media_upload', lang) }, // CHANGED
     action: {
       buttons: [
-        { type: 'reply', reply: { id: 'send_now', title: t('send_now_option', lang) } },
-        { type: 'reply', reply: { id: 'skip_media', title: t('skip_media_option', lang) } }
+        // CHANGED: Using consistent option keys for IDs
+        { type: 'reply', reply: { id: 'option_send_now', title: t('option_send_now', lang) } },
+        { type: 'reply', reply: { id: 'option_skip', title: t('option_skip', lang) } }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the help or service prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- * @param isDirectRequest Whether this is a direct request for services.
- */
 export const promptHelpOrService = async (to: string, lang: Language, isDirectRequest = false) => {
-  const text = isDirectRequest ? t('select_services_prompt', lang) : t('help_or_service_prompt', lang);
-  const interactive = {
-    type: 'button',
-    body: { text },
-    action: {
-      buttons: [
-        { type: 'reply', reply: { id: 'yes_need_help', title: t('yes_option', lang) } },
-        { type: 'reply', reply: { id: 'no_need_help', title: t('no_option', lang) } }
-      ]
-    }
-  };
   if (isDirectRequest) {
+    // If it's a direct request, go straight to service selection
     await promptServiceSelection(to, lang);
   } else {
+    // Otherwise, ask if they need help
+    const interactive = {
+      type: 'button',
+      body: { text: t('prompt_need_support_incident', lang) }, // CHANGED
+      action: {
+        buttons: [
+          // CHANGED: Using consistent option keys for IDs
+          { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
+          { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
+        ]
+      }
+    };
     await sendInteractiveMessage(to, interactive);
   }
 };
 
-/**
- * Sends the service selection prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptServiceSelection = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('select_services_prompt', lang) },
+    body: { text: t('prompt_select_services', lang) }, // Ensure this key exists
     action: {
-      button: t('select_service_button', lang),
+      button: t('button_select_service'), // CHANGED
       sections: [
         {
-          title: t('support_section_title', lang),
+          title: t('section_support_services', lang), // Ensure this key exists
           rows: [
-            { id: 'Police_Security', title: t('police_security_option', lang) },
-            { id: 'Medical_Support', title: t('medical_support_option', lang) },
-            { id: 'Legal_Advice', title: t('legal_advice_option', lang) },
-            { id: 'Counselling', title: t('counselling_option', lang) },
-            { id: 'Shelter_Safe_Home', title: t('shelter_safe_home_option', lang) },
-            { id: 'other_service', title: t('other_service_option', lang) }
+            // Add corresponding 'option_*' keys to your translation file for these
+            { id: 'Police_Security', title: 'Police/Security' },
+            { id: 'Medical_Support', title: 'Medical Support' },
+            { id: 'Legal_Advice', title: 'Legal Advice' },
+            { id: 'Counselling', title: 'Counselling' },
+            { id: 'Shelter_Safe_Home', title: 'Shelter or Safe Home' },
+            { id: 'other_service', title: t('option_other', lang) }
           ]
         }
       ]
@@ -342,40 +273,31 @@ export const promptServiceSelection = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the consent prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- * @param isServiceRequest Whether this is for a direct service request.
- */
 export const promptConsent = async (to: string, lang: Language, isServiceRequest = false) => {
-  const textKey = isServiceRequest ? 'consent_prompt_direct_service' : 'consent_prompt';
+  const textKey = isServiceRequest ? 'prompt_consent_direct_service' : 'prompt_consent'; // CHANGED
   const interactive = {
     type: 'button',
     body: { text: t(textKey, lang) },
     action: {
       buttons: [
-        { type: 'reply', reply: { id: 'yes_consent', title: t('yes_consent_option', lang) } },
-        { type: 'reply', reply: { id: 'no_consent', title: t('no_consent_option', lang) } }
+        // CHANGED: Using consistent option keys for IDs
+        { type: 'reply', reply: { id: 'option_yes_consent', title: t('option_yes_consent', lang) } },
+        { type: 'reply', reply: { id: 'option_no_consent', title: t('option_no_consent', lang) } }
       ]
     }
   };
   await sendInteractiveMessage(to, interactive);
 };
 
-/**
- * Sends the follow-up updates prompt.
- * @param to The recipient's phone number.
- * @param lang The selected language for the user.
- */
 export const promptFollowUpUpdates = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('follow_up_prompt', lang) },
+    body: { text: t('prompt_follow_up', lang) }, // CHANGED
     action: {
       buttons: [
-        { type: 'reply', reply: { id: 'yes_follow_up', title: t('yes_option', lang) } },
-        { type: 'reply', reply: { id: 'no_follow_up', title: t('no_option', lang) } }
+        // CHANGED: Using consistent option keys for IDs
+        { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
+        { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
       ]
     }
   };

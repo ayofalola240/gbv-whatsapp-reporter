@@ -56,7 +56,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       const lang = userResponseText.toLowerCase();
       if (['english', 'yoruba', 'igbo', 'hausa'].includes(lang)) {
         session.language = lang as Language;
-        await WhatsAppService.sendTextMessage(from, t('language_set_confirmation', session.language, session.language));
+        await WhatsAppService.sendTextMessage(from, t('confirmation_language_set', session.language, session.language));
         await WhatsAppService.promptAnonymity(from, session.language);
         session.currentStep = 'select_anonymity';
       } else {
@@ -66,26 +66,24 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'select_anonymity':
-      if (userResponseText === 'share_details') {
+      // FIX: Check against the new button IDs
+      if (userResponseText === 'option_share_details') {
         session.reportData.isAnonymous = false;
-        // You would continue the flow to ask for name, phone, etc.
-        // For now, we'll just move to the main menu.
-        await WhatsAppService.promptIncidentOrHelp(from, session.language!);
-        session.currentStep = 'incident_or_help';
-      } else if (userResponseText === 'remain_anonymous') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_name', session.language));
+        session.currentStep = 'enter_name';
+      } else if (userResponseText === 'option_remain_anonymous') {
         session.reportData.isAnonymous = true;
-        await WhatsAppService.sendTextMessage(from, t('anonymous_confirmation', session.language));
+        await WhatsAppService.sendTextMessage(from, t('confirmation_anonymous', session.language));
         await WhatsAppService.promptIncidentOrHelp(from, session.language!);
         session.currentStep = 'incident_or_help';
       } else {
-        // Re-prompt if the answer is not recognized.
         await WhatsAppService.promptAnonymity(from, session.language!);
       }
       break;
 
     case 'enter_name':
       session.reportData.reporterName = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('enter_phone_prompt', session.language));
+      await WhatsAppService.sendTextMessage(from, t('prompt_phone', session.language));
       session.currentStep = 'enter_phone';
       break;
 
@@ -98,14 +96,14 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'incident_or_help':
-      if (userResponseText.toLowerCase() === 'report_incident') {
-        await WhatsAppService.sendTextMessage(from, t('incident_date_prompt', session.language));
+      if (userResponseText === 'option_report_incident') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_incident_date', session.language));
         session.currentStep = 'collect_date';
-      } else if (userResponseText.toLowerCase() === 'request_help') {
-        await WhatsAppService.promptHelpOrService(from, session.language!, true);
+      } else if (userResponseText === 'option_request_help') {
+        await WhatsAppService.promptServiceSelection(from, session.language!);
         session.currentStep = 'select_services_direct';
-      } else if (userResponseText.toLowerCase() === 'check_status') {
-        await WhatsAppService.sendTextMessage(from, t('enter_reference_id_prompt', session.language));
+      } else if (userResponseText === 'option_check_status') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_enter_reference_id', session.language));
         session.currentStep = 'enter_reference_id_for_status';
       } else {
         await WhatsAppService.promptIncidentOrHelp(from, session.language!);
@@ -165,13 +163,15 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_perpetrator_known':
-      if (userResponseText.toLowerCase() === 'yes_know_perpetrator') {
+      // FIX: Check against the new button IDs
+      if (userResponseText === 'option_yes') {
         session.reportData.perpetratorKnown = true;
         await WhatsAppService.promptPerpetratorRelationship(from, session.language!);
         session.currentStep = 'collect_perpetrator_relationship';
       } else {
+        // Assumes 'option_no' or any other reply
         session.reportData.perpetratorKnown = false;
-        await WhatsAppService.sendTextMessage(from, t('incident_description_prompt', session.language));
+        await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language));
         session.currentStep = 'collect_description';
       }
       break;
@@ -195,20 +195,24 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_evidence_prompt':
-      if (userResponseText.toLowerCase() === 'send_now') {
-        await WhatsAppService.sendTextMessage(from, t('upload_media_prompt', session.language));
-        // Wait for media upload; handled by media type check elsewhere
+      // FIX: Check against the new button IDs
+      if (userResponseText === 'option_send_now') {
+        await WhatsAppService.sendTextMessage(from, t('message_upload_media', session.language));
+        // Waiting for media...
       } else {
+        // Assumes 'option_skip'
         await WhatsAppService.promptHelpOrService(from, session.language!);
         session.currentStep = 'ask_help_or_service';
       }
       break;
 
     case 'ask_help_or_service':
-      if (userResponseText.toLowerCase() === 'yes_need_help') {
+      // FIX: Check against the new button IDs
+      if (userResponseText === 'option_yes') {
         await WhatsAppService.promptServiceSelection(from, session.language!);
         session.currentStep = 'collect_services';
       } else {
+        // Assumes 'option_no'
         await WhatsAppService.promptConsent(from, session.language!);
         session.currentStep = 'collect_consent';
       }
@@ -234,14 +238,14 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     case 'select_services_direct':
       session.reportData.servicesRequested = [userResponseText];
       session.reportData.isDirectServiceRequest = true;
-      await WhatsAppService.sendTextMessage(from, t('service_consent_prompt', session.language));
+      await WhatsAppService.sendTextMessage(from, t('prompt_consent', session.language));
       await WhatsAppService.promptConsent(from, session.language!, true);
       session.currentStep = 'collect_consent_direct_service';
       break;
 
     case 'collect_consent':
     case 'collect_consent_direct_service':
-      if (userResponseText.toLowerCase() === 'yes_consent') {
+      if (userResponseText.toLowerCase() === 'option_yes_consent') {
         session.reportData.consentGiven = true;
         const refId = `GBV-${Math.random().toString(36).substr(2, 5).toUpperCase()}`; // Dummy ref ID
         session.reportData.referenceId = refId;
@@ -255,7 +259,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
         session.currentStep = 'ask_follow_up';
       } else {
         session.reportData.consentGiven = false;
-        await WhatsAppService.sendTextMessage(from, t('no_consent_message', session.language));
+        await WhatsAppService.sendTextMessage(from, t('option_no_consent', session.language));
         SessionManager.deleteSession(from); // FIX: Use session manager to delete
         return; // FIX: Return here to prevent saving a deleted session
       }
@@ -268,7 +272,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       return; // FIX: Return here to prevent saving a deleted session
 
     case 'ask_follow_up':
-      if (userResponseText.toLowerCase() === 'yes_follow_up') {
+      if (userResponseText.toLowerCase() === 'option_yes') {
         await WhatsAppService.sendTextMessage(from, t('follow_up_confirmation', session.language));
       } else {
         await WhatsAppService.sendTextMessage(from, t('no_follow_up_message', session.language));
