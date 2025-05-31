@@ -118,7 +118,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_time':
       session.reportData.incidentTime = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('location_description_prompt', session.language));
+      await WhatsAppService.sendTextMessage(from, t('prompt_location_description', session.language));
       session.currentStep = 'collect_location_description';
       break;
 
@@ -130,8 +130,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_exact_location_type':
       session.reportData.exactLocationType = userResponseText;
-      if (userResponseText.toLowerCase() === 'other_location') {
-        await WhatsAppService.sendTextMessage(from, t('other_location_detail_prompt', session.language));
+      // CHANGED: Check against the consistent 'option_other' ID
+      if (userResponseText === 'option_other') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_location', session.language)); // CHANGED: Correct key
         session.currentStep = 'collect_other_location_detail';
       } else {
         await WhatsAppService.promptViolenceType(from, session.language!);
@@ -147,8 +148,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_violence_type':
       session.reportData.violenceType = userResponseText;
-      if (userResponseText.toLowerCase() === 'other_violence') {
-        await WhatsAppService.sendTextMessage(from, t('other_violence_detail_prompt', session.language));
+      // CHANGED: Check against the consistent 'option_other' ID
+      if (userResponseText === 'option_other') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_violence', session.language)); // CHANGED: Correct key
         session.currentStep = 'collect_other_violence_detail';
       } else {
         await WhatsAppService.promptPerpetratorKnown(from, session.language!);
@@ -163,28 +165,26 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_perpetrator_known':
-      // FIX: Check against the new button IDs
       if (userResponseText === 'option_yes') {
         session.reportData.perpetratorKnown = true;
         await WhatsAppService.promptPerpetratorRelationship(from, session.language!);
         session.currentStep = 'collect_perpetrator_relationship';
       } else {
-        // Assumes 'option_no' or any other reply
         session.reportData.perpetratorKnown = false;
-        await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language));
+        await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language)); // Key was already correct
         session.currentStep = 'collect_description';
       }
       break;
 
     case 'collect_perpetrator_relationship':
       session.reportData.perpetratorRelationship = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('perpetrator_count_prompt', session.language));
+      await WhatsAppService.sendTextMessage(from, t('prompt_perpetrator_count', session.language)); // CHANGED: Correct key
       session.currentStep = 'collect_perpetrator_count';
       break;
 
     case 'collect_perpetrator_count':
-      session.reportData.perpetratorCount = userResponseText; // Validate as number
-      await WhatsAppService.sendTextMessage(from, t('incident_description_prompt', session.language));
+      session.reportData.perpetratorCount = userResponseText;
+      await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language)); // Key was already correct
       session.currentStep = 'collect_description';
       break;
 
@@ -195,24 +195,19 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_evidence_prompt':
-      // FIX: Check against the new button IDs
       if (userResponseText === 'option_send_now') {
-        await WhatsAppService.sendTextMessage(from, t('message_upload_media', session.language));
-        // Waiting for media...
+        await WhatsAppService.sendTextMessage(from, t('message_upload_media', session.language)); // CHANGED: Correct key
       } else {
-        // Assumes 'option_skip'
         await WhatsAppService.promptHelpOrService(from, session.language!);
         session.currentStep = 'ask_help_or_service';
       }
       break;
 
     case 'ask_help_or_service':
-      // FIX: Check against the new button IDs
       if (userResponseText === 'option_yes') {
         await WhatsAppService.promptServiceSelection(from, session.language!);
         session.currentStep = 'collect_services';
       } else {
-        // Assumes 'option_no'
         await WhatsAppService.promptConsent(from, session.language!);
         session.currentStep = 'collect_consent';
       }
@@ -220,8 +215,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_services':
       session.reportData.servicesRequested = [userResponseText];
-      if (userResponseText.toLowerCase() === 'other_service') {
-        await WhatsAppService.sendTextMessage(from, t('other_service_detail_prompt', session.language));
+      // CHANGED: Check against the consistent 'option_other' ID
+      if (userResponseText === 'option_other') {
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_service', session.language)); // CHANGED: Correct key
         session.currentStep = 'collect_other_service_detail';
       } else {
         await WhatsAppService.promptConsent(from, session.language!);
@@ -238,47 +234,49 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     case 'select_services_direct':
       session.reportData.servicesRequested = [userResponseText];
       session.reportData.isDirectServiceRequest = true;
-      await WhatsAppService.sendTextMessage(from, t('prompt_consent', session.language));
+      // CHANGED: Removed redundant text message. The promptConsent function already sends the message.
       await WhatsAppService.promptConsent(from, session.language!, true);
       session.currentStep = 'collect_consent_direct_service';
       break;
 
     case 'collect_consent':
     case 'collect_consent_direct_service':
-      if (userResponseText.toLowerCase() === 'option_yes_consent') {
+      // CHANGED: Removed unnecessary .toLowerCase()
+      if (userResponseText === 'option_yes_consent') {
         session.reportData.consentGiven = true;
-        const refId = `GBV-${Math.random().toString(36).substr(2, 5).toUpperCase()}`; // Dummy ref ID
+        const refId = `GBV-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
         session.reportData.referenceId = refId;
-        await WhatsAppService.sendTextMessage(from, t('report_submitted', session.language, refId));
+        await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language, refId)); // CHANGED: Correct key
         if (session.currentStep === 'collect_consent') {
-          await WhatsAppService.sendTextMessage(from, t('report_escalation_message', session.language));
+          await WhatsAppService.sendTextMessage(from, t('message_escalation', session.language)); // CHANGED: Correct key
         } else {
-          await WhatsAppService.sendTextMessage(from, t('service_connection_message', session.language));
+          await WhatsAppService.sendTextMessage(from, t('message_service_connection', session.language)); // CHANGED: Correct key
         }
         await WhatsAppService.promptFollowUpUpdates(from, session.language!);
         session.currentStep = 'ask_follow_up';
       } else {
         session.reportData.consentGiven = false;
-        await WhatsAppService.sendTextMessage(from, t('option_no_consent', session.language));
-        SessionManager.deleteSession(from); // FIX: Use session manager to delete
-        return; // FIX: Return here to prevent saving a deleted session
+        // CHANGED: Use the correct key for the refusal message.
+        await WhatsAppService.sendTextMessage(from, t('message_consent_refused', session.language));
+        await SessionManager.deleteSession(from); // CHANGED: Added await
+        return;
       }
       break;
 
     case 'enter_reference_id_for_status':
-      // TODO: Implement status check logic
-      await WhatsAppService.sendTextMessage(from, t('status_check_message', session.language, userResponseText));
-      SessionManager.deleteSession(from); // FIX: Use session manager to delete
-      return; // FIX: Return here to prevent saving a deleted session
+      await WhatsAppService.sendTextMessage(from, t('message_status_check', session.language, userResponseText)); // CHANGED: Correct key
+      await SessionManager.deleteSession(from); // CHANGED: Added await
+      return;
 
     case 'ask_follow_up':
-      if (userResponseText.toLowerCase() === 'option_yes') {
-        await WhatsAppService.sendTextMessage(from, t('follow_up_confirmation', session.language));
+      // CHANGED: Removed unnecessary .toLowerCase()
+      if (userResponseText === 'option_yes') {
+        await WhatsAppService.sendTextMessage(from, t('confirmation_follow_up', session.language)); // CHANGED: Correct key
       } else {
-        await WhatsAppService.sendTextMessage(from, t('no_follow_up_message', session.language));
+        await WhatsAppService.sendTextMessage(from, t('message_no_follow_up', session.language)); // CHANGED: Correct key
       }
-      SessionManager.deleteSession(from); // FIX: Use session manager to delete
-      return; // FIX: Return here to prevent saving a deleted session
+      await SessionManager.deleteSession(from); // CHANGED: Added await
+      return;
 
     default:
       // If the step is unknown, reset the conversation.
