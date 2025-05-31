@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { processMessage } from '../services/whatsapp.service'; // You'll create this service
+
 import { config } from '../config';
+import { processMessage } from './conversation.controller';
 
 const WHATSAPP_VERIFY_TOKEN = config.whatsappVerifyToken; // Ensure this is set in your config
 
