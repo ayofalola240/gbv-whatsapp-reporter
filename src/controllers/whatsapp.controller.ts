@@ -26,6 +26,7 @@ export const verifyWebhook = (req: Request, res: Response) => {
 
 export const handleIncomingMessage = async (req: Request, res: Response) => {
   const body = req.body;
+  console.log('Received WhatsApp message:', JSON.stringify(body, null, 2)); // For debugging
 
   // Check if it's a WhatsApp notification
   if (body.object === 'whatsapp_business_account') {
