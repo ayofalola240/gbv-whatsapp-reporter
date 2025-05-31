@@ -18,11 +18,15 @@ export type Language = 'English' | 'Yoruba' | 'Igbo' | 'Hausa';
  */
 export const translations: Translations = {
   // --- Welcome & Language ---
+  // in ./config/translation.ts
+
   prompt_welcome: {
-    English: 'Welcome to the FCTA GBV Reporting Center. Please select your language:',
-    Yoruba: 'Ẹ ku abọ si Ile-iṣẹ Iroyin GBV ti FCTA. Jọwọ yan èdè rẹ:',
-    Igbo: 'Nnọọ na FCTA GBV Reporting Center. Biko họrọ asụsụ gị:',
-    Hausa: 'Barka da zuwa Cibiyar Rahoto ta GBV ta FCTA. Don Allah zaɓi harshenka:'
+    English:
+      "Welcome to the FCTA GBV Reporting Center. Please select your language.\n\nTip: You can type 'Restart' at any time to begin again.",
+    Yoruba: "Ẹ ku abọ si Ile-iṣẹ Iroyin GBV ti FCTA. Jọwọ yan èdè rẹ.\n\nÌmọ̀ràn: O le tẹ 'Restart' nígbàkúgbà láti bẹ̀rẹ̀ lẹ́ẹ̀kansí.",
+    Igbo: "Nnọọ na FCTA GBV Reporting Center. Biko họrọ asụsụ gị.\n\nNdụmọdụ: Ị nwere ike pịnye 'Restart' n'oge ọ bụla iji malite ọzọ.",
+    Hausa:
+      "Barka da zuwa Cibiyar Rahoto ta GBV ta FCTA. Don Allah zaɓi harshenka.\n\nShawara: Kuna iya rubuta 'Restart' a kowane lokaci don farawa."
   },
   confirmation_language_set: {
     English: 'Language set to {0}.',
@@ -163,6 +167,21 @@ export const translations: Translations = {
   },
   button_select_relationship: { English: 'Select Relationship', Yoruba: 'Yan Ibatan', Igbo: 'Họrọ Mmekọrịta', Hausa: 'Zaɓi Dangantaka' },
   button_select_service: { English: 'Select Service', Yoruba: 'Yan Iṣẹ́ Ìrànlọ́wọ́', Igbo: 'Họrọ Ọrụ', Hausa: 'Zaɓi Sabis' },
+  // in ./config/translation.ts
+
+  // Add these keys inside your translations object
+  button_choose_option: {
+    English: 'Choose an option',
+    Yoruba: 'Yan àṣàyàn kan',
+    Igbo: 'Họrọ nhọrọ',
+    Hausa: 'Zaɓi wani zaɓi'
+  },
+  option_start_over: {
+    English: 'Start Over',
+    Yoruba: 'Bẹ̀rẹ̀ Lẹ́ẹ̀kansí',
+    Igbo: 'Malite Ọzọ',
+    Hausa: 'Fara Daga Farko'
+  },
   option_report_incident: { English: 'Report Incident', Yoruba: 'Ìròyìn Ìṣẹ̀lẹ̀', Igbo: 'Kọọ Ihe Mere', Hausa: 'Bayar da Rahoto' },
   option_request_help: { English: 'Request Help', Yoruba: 'Beere fún Ìrànlọ́wọ́', Igbo: 'Rịọ Enyemaka', Hausa: 'Nemi Taimako' },
   option_check_status: {
@@ -181,6 +200,12 @@ export const translations: Translations = {
   option_no_consent: { English: 'No, I do not', Yoruba: 'Bẹ́ẹ̀ kọ́, n kò gbà', Igbo: 'Mba, ekweghị m', Hausa: "A'a, ban yarda ba" },
 
   // --- List Sections & Rows (Row titles <= 24 chars) ---
+  section_main_menu: {
+    English: 'Main Menu',
+    Yoruba: 'Àtòjọ Àkọ́kọ́',
+    Igbo: 'Nchịkọta Nhọrọ',
+    Hausa: 'Babban Menu'
+  },
   section_languages: { English: 'Available Languages', Yoruba: 'Àwọn Èdè Tó Wà', Igbo: 'Asụsụ Dị', Hausa: 'Harsunan da ke Akwai' },
   section_time_of_day: { English: 'Time of Day', Yoruba: 'Àsìkò Ọjọ́', Igbo: 'Oge Ụbọchị', Hausa: 'Lokacin Rana' },
   section_violence_types: {

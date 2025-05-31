@@ -81,16 +81,25 @@ export const promptAnonymity = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
+// in ./services/whatsapp.service.ts
+
 export const promptIncidentOrHelp = async (to: string, lang: Language) => {
   const interactive = {
-    type: 'button',
-    body: { text: t('prompt_main_menu', lang) }, // CHANGED
+    type: 'list', // CHANGED from 'button' to 'list'
+    body: { text: t('prompt_main_menu', lang) },
     action: {
-      buttons: [
-        // CHANGED: Using consistent option keys for IDs
-        { type: 'reply', reply: { id: 'option_report_incident', title: t('option_report_incident', lang) } },
-        { type: 'reply', reply: { id: 'option_request_help', title: t('option_request_help', lang) } },
-        { type: 'reply', reply: { id: 'option_check_status', title: t('option_check_status', lang) } }
+      button: t('button_choose_option', lang), // Text for the button that opens the list
+      sections: [
+        {
+          title: t('section_main_menu', lang),
+          rows: [
+            { id: 'option_report_incident', title: t('option_report_incident', lang) },
+            { id: 'option_request_help', title: t('option_request_help', lang) },
+            { id: 'option_check_status', title: t('option_check_status', lang) },
+            // NEW: The restart option. Its ID triggers the logic from Step 1.
+            { id: 'restart', title: t('option_start_over', lang) }
+          ]
+        }
       ]
     }
   };
