@@ -1,38 +1,25 @@
-/**
- * @file Core conversation logic and state machine for the chatbot.
- */
-
 import * as WhatsAppService from '../services/whatsapp.service';
+import * as ReportService from '../services/report.service';
 import * as SessionManager from '../services/session.manager';
 import { t, Language } from '../config/translation';
 
-interface UserSession {
-  currentStep: string;
-  language?: 'English' | 'Yoruba' | 'Igbo' | 'Hausa';
-  reportData: Partial<any>; // Store partial report data
-  lastMessageId?: string;
-}
-const userSessions: Record<string, UserSession> = {};
-
-/**
- * Processes an incoming message from a user.
- * This is the main entry point for the conversation logic.
- * @param from The sender's phone number.
- * @param message The incoming WhatsApp message object.
- */
 export const processMessage = async (from: string, message: any, botPhoneNumberId: string) => {
-  // --- IMPORTANT: Echo Prevention ---
-  // Check if the message is from the bot itself. If so, ignore it.
   if (message.from === botPhoneNumberId) {
     console.log('Ignoring echo message from the bot itself.');
     return;
   }
-  // Get or create a session for the user.
+
+  // --- NEW: Add the restart logic here ---
+  const restartKeywords = ['restart', 'reset', 'menu', 'start over'];
+  if (message.type === 'text' && restartKeywords.includes(message.text.body.toLowerCase().trim())) {
+    console.log(`User ${from} initiated a restart.`);
+    await SessionManager.deleteSession(from);
+    await WhatsAppService.sendLanguageSelection(from);
+    return;
+  }
+
   let session = (await SessionManager.getSession(from)) || (await SessionManager.createSession(from));
 
-  // AND...
-
-  // Extract the user's response text from various message types.
   let userResponseText = '';
   if (message.type === 'text') {
     userResponseText = message.text.body;
@@ -40,12 +27,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     const replyType = message.interactive.type;
     userResponseText = message.interactive[replyType].id;
   }
-  // Handle other message types like media (images, audio) if needed.
 
   console.log(`Processing step: ${session.currentStep} for user ${from} with response: '${userResponseText}'`);
 
-  // --- State Machine ---
-  // The 'switch' statement determines what to do based on the user's current step.
   switch (session.currentStep) {
     case 'start':
       await WhatsAppService.sendLanguageSelection(from);
@@ -60,13 +44,11 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
         await WhatsAppService.promptAnonymity(from, session.language);
         session.currentStep = 'select_anonymity';
       } else {
-        // If the response is invalid, re-send the language selection prompt.
         await WhatsAppService.sendLanguageSelection(from);
       }
       break;
 
     case 'select_anonymity':
-      // FIX: Check against the new button IDs
       if (userResponseText === 'option_share_details') {
         session.reportData.isAnonymous = false;
         await WhatsAppService.sendTextMessage(from, t('prompt_name', session.language));
@@ -111,7 +93,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_date':
-      session.reportData.incidentDate = userResponseText; // Add date validation
+      session.reportData.incidentDate = userResponseText;
       await WhatsAppService.promptIncidentTime(from, session.language!);
       session.currentStep = 'collect_time';
       break;
@@ -130,9 +112,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_exact_location_type':
       session.reportData.exactLocationType = userResponseText;
-      // CHANGED: Check against the consistent 'option_other' ID
+
       if (userResponseText === 'option_other') {
-        await WhatsAppService.sendTextMessage(from, t('prompt_other_location', session.language)); // CHANGED: Correct key
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_location', session.language));
         session.currentStep = 'collect_other_location_detail';
       } else {
         await WhatsAppService.promptViolenceType(from, session.language!);
@@ -148,9 +130,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_violence_type':
       session.reportData.violenceType = userResponseText;
-      // CHANGED: Check against the consistent 'option_other' ID
+
       if (userResponseText === 'option_other') {
-        await WhatsAppService.sendTextMessage(from, t('prompt_other_violence', session.language)); // CHANGED: Correct key
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_violence', session.language));
         session.currentStep = 'collect_other_violence_detail';
       } else {
         await WhatsAppService.promptPerpetratorKnown(from, session.language!);
@@ -171,20 +153,20 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
         session.currentStep = 'collect_perpetrator_relationship';
       } else {
         session.reportData.perpetratorKnown = false;
-        await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language)); // Key was already correct
+        await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language));
         session.currentStep = 'collect_description';
       }
       break;
 
     case 'collect_perpetrator_relationship':
       session.reportData.perpetratorRelationship = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('prompt_perpetrator_count', session.language)); // CHANGED: Correct key
+      await WhatsAppService.sendTextMessage(from, t('prompt_perpetrator_count', session.language));
       session.currentStep = 'collect_perpetrator_count';
       break;
 
     case 'collect_perpetrator_count':
       session.reportData.perpetratorCount = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language)); // Key was already correct
+      await WhatsAppService.sendTextMessage(from, t('prompt_incident_description', session.language));
       session.currentStep = 'collect_description';
       break;
 
@@ -196,7 +178,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_evidence_prompt':
       if (userResponseText === 'option_send_now') {
-        await WhatsAppService.sendTextMessage(from, t('message_upload_media', session.language)); // CHANGED: Correct key
+        await WhatsAppService.sendTextMessage(from, t('message_upload_media', session.language));
       } else {
         await WhatsAppService.promptHelpOrService(from, session.language!);
         session.currentStep = 'ask_help_or_service';
@@ -215,9 +197,9 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'collect_services':
       session.reportData.servicesRequested = [userResponseText];
-      // CHANGED: Check against the consistent 'option_other' ID
+
       if (userResponseText === 'option_other') {
-        await WhatsAppService.sendTextMessage(from, t('prompt_other_service', session.language)); // CHANGED: Correct key
+        await WhatsAppService.sendTextMessage(from, t('prompt_other_service', session.language));
         session.currentStep = 'collect_other_service_detail';
       } else {
         await WhatsAppService.promptConsent(from, session.language!);
@@ -234,58 +216,59 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     case 'select_services_direct':
       session.reportData.servicesRequested = [userResponseText];
       session.reportData.isDirectServiceRequest = true;
-      // CHANGED: Removed redundant text message. The promptConsent function already sends the message.
       await WhatsAppService.promptConsent(from, session.language!, true);
       session.currentStep = 'collect_consent_direct_service';
       break;
 
+    // --- THIS IS THE MODIFIED CASE ---
     case 'collect_consent':
     case 'collect_consent_direct_service':
-      // CHANGED: Removed unnecessary .toLowerCase()
       if (userResponseText === 'option_yes_consent') {
         session.reportData.consentGiven = true;
-        const refId = `GBV-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+
+        // Generate a more unique reference ID
+        const refId = `GBV-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
         session.reportData.referenceId = refId;
-        await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language, refId)); // CHANGED: Correct key
-        if (session.currentStep === 'collect_consent') {
-          await WhatsAppService.sendTextMessage(from, t('message_escalation', session.language)); // CHANGED: Correct key
-        } else {
-          await WhatsAppService.sendTextMessage(from, t('message_service_connection', session.language)); // CHANGED: Correct key
+
+        // --- NEW: Save to Database with Error Handling ---
+        try {
+          // Call the service to save the report data from the session
+          await ReportService.saveIncidentReport(session.reportData);
+
+          // Only send success messages if the report was saved successfully
+          await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language, refId));
+
+          if (session.currentStep === 'collect_consent') {
+            await WhatsAppService.sendTextMessage(from, t('message_escalation', session.language));
+          } else {
+            await WhatsAppService.sendTextMessage(from, t('message_service_connection', session.language));
+          }
+
+          await WhatsAppService.promptFollowUpUpdates(from, session.language!);
+          session.currentStep = 'ask_follow_up';
+        } catch (dbError) {
+          // If the database save fails, inform the user and do not proceed.
+          await WhatsAppService.sendTextMessage(from, t('error_submission_failed', session.language));
+          // We don't delete the session here, so the user can potentially try again later.
         }
-        await WhatsAppService.promptFollowUpUpdates(from, session.language!);
-        session.currentStep = 'ask_follow_up';
       } else {
+        // This part is for when consent is denied
         session.reportData.consentGiven = false;
-        // CHANGED: Use the correct key for the refusal message.
         await WhatsAppService.sendTextMessage(from, t('message_consent_refused', session.language));
-        await SessionManager.deleteSession(from); // CHANGED: Added await
-        return;
+        await SessionManager.deleteSession(from);
+        return; // Important: exit to prevent further processing
       }
       break;
 
-    case 'enter_reference_id_for_status':
-      await WhatsAppService.sendTextMessage(from, t('message_status_check', session.language, userResponseText)); // CHANGED: Correct key
-      await SessionManager.deleteSession(from); // CHANGED: Added await
-      return;
-
-    case 'ask_follow_up':
-      // CHANGED: Removed unnecessary .toLowerCase()
-      if (userResponseText === 'option_yes') {
-        await WhatsAppService.sendTextMessage(from, t('confirmation_follow_up', session.language)); // CHANGED: Correct key
-      } else {
-        await WhatsAppService.sendTextMessage(from, t('message_no_follow_up', session.language)); // CHANGED: Correct key
-      }
-      await SessionManager.deleteSession(from); // CHANGED: Added await
-      return;
-
     default:
-      // If the step is unknown, reset the conversation.
       await WhatsAppService.sendTextMessage(from, "Sorry, I lost my place. Let's start over.");
       await WhatsAppService.sendLanguageSelection(from);
       session.currentStep = 'select_language';
       break;
   }
 
-  // Save the updated session state for the user.
-  SessionManager.updateSession(from, session);
+  // Save the updated session state for the user unless it was deleted
+  if (await SessionManager.getSession(from)) {
+    await SessionManager.updateSession(from, session);
+  }
 };

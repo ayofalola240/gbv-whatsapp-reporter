@@ -1,50 +1,39 @@
-// src/models/incidentReport.model.ts (Ensure this and other models are created as previously discussed)
-import { Schema, model, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 
+// Define the structure of the report document
 export interface IIncidentReport extends Document {
-  sourceUserId: string;
+  referenceId: string;
+  isAnonymous: boolean;
   reporterName?: string;
   reporterPhone?: string;
-  victimName?: string;
-  victimAge?: number;
-  victimGender?: string;
-  violenceType: 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other' | string; // Allow string for 'Other: ...'
-  incidentDate: Date;
+  incidentDate?: string; // Storing as string from user, can be converted to Date
   incidentTime?: string;
-  location: string;
-  description: string;
+  locationText?: string;
+  exactLocationType?: string;
+  violenceType?: 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other' | string; // Allow string for 'Other: ...'
   servicesRequested?: ('Medical' | 'Legal' | 'Shelter' | 'Psychological' | 'Police/Security' | 'Counselling' | 'Other' | string)[];
-  consentGiven: boolean;
+  perpetratorKnown?: boolean;
+  perpetratorRelationship?: string;
+  perpetratorCount?: string;
   status: 'Submitted' | 'Escalated' | 'InProgress' | 'Closed' | 'Aborted';
   pdfPath?: string;
   mediaFiles?: Types.ObjectId[];
-  referenceId: string;
-  isAnonymous: boolean;
-  perpetratorKnown?: boolean;
-  perpetratorRelationship?: string;
-  perpetratorCount?: string; // or number
+  description?: string;
   mediaAttached?: boolean;
   isDirectServiceRequest?: boolean;
-  language: 'English' | 'Yoruba' | 'Igbo' | 'Hausa' | string;
-  createdAt: Date;
-  updatedAt: Date;
+  consentGiven: boolean;
+  language: { type: String; default: 'English' };
 }
 
-const incidentReportSchema = new Schema<IIncidentReport>(
+const IncidentReportSchema: Schema = new Schema(
   {
-    sourceUserId: { type: String, required: true, index: true },
-    reporterName: { type: String, trim: true },
-    reporterPhone: { type: String, trim: true },
-    victimName: { type: String, trim: true, default: 'Anonymous' },
-    victimAge: { type: Number },
-    victimGender: { type: String },
-    violenceType: { type: String, required: true },
-    incidentDate: { type: Date, required: true },
+    referenceId: { type: String, required: true, unique: true },
+    isAnonymous: { type: Boolean, required: true },
+    reporterName: { type: String },
+    reporterPhone: { type: String },
+    incidentDate: { type: String },
     incidentTime: { type: String },
-    location: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true },
-    servicesRequested: [{ type: String }],
-    consentGiven: { type: Boolean, required: true },
+    locationText: { type: String },
     status: {
       type: String,
       enum: ['Submitted', 'Escalated', 'InProgress', 'Closed', 'Aborted'],
@@ -52,16 +41,22 @@ const incidentReportSchema = new Schema<IIncidentReport>(
     },
     pdfPath: { type: String },
     mediaFiles: [{ type: Schema.Types.ObjectId, ref: 'MediaFile' }],
-    referenceId: { type: String, required: true, unique: true },
-    isAnonymous: { type: Boolean, default: true },
+    exactLocationType: { type: String },
+    violenceType: { type: String },
     perpetratorKnown: { type: Boolean },
     perpetratorRelationship: { type: String },
     perpetratorCount: { type: String },
+    description: { type: String },
     mediaAttached: { type: Boolean, default: false },
+    servicesRequested: { type: [String] },
     isDirectServiceRequest: { type: Boolean, default: false },
+    consentGiven: { type: Boolean, required: true },
     language: { type: String, default: 'English' }
   },
-  { timestamps: true }
+  {
+    // This automatically adds `createdAt` and `updatedAt` fields
+    timestamps: true
+  }
 );
 
-export const IncidentReport = model<IIncidentReport>('IncidentReport', incidentReportSchema);
+export default mongoose.model<IIncidentReport>('IncidentReport', IncidentReportSchema);

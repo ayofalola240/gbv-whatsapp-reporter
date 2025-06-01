@@ -157,22 +157,18 @@ export const promptExactLocationType = async (to: string, lang: Language) => {
 export const promptViolenceType = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_violence_type', lang) }, // CHANGED
+    body: { text: t('prompt_violence_type', lang) },
     action: {
-      button: t('button_select_violence'), // CHANGED
+      button: t('button_select_violence'),
       sections: [
         {
-          title: t('section_violence_types', lang), // Ensure this key exists in your translations
+          title: t('section_violence_types', lang),
           rows: [
-            // Add corresponding 'option_*' keys to your translation file for these
-            { id: 'Sexual_Assault', title: 'Sexual Assault' }, // Example: t('option_sexual_assault', lang)
-            { id: 'Rape', title: 'Rape' },
-            { id: 'Defilement', title: 'Defilement' },
-            { id: 'Physical_Assault', title: 'Physical Assault' },
-            { id: 'Psychological_Abuse', title: 'Psychological Abuse' },
-            { id: 'Forced_Marriage', title: 'Forced Marriage' },
-            { id: 'Online_Harassment', title: 'Online Harassment' },
-            { id: 'other_violence', title: t('option_other', lang) }
+            { id: 'Physical', title: t('option_violence_physical', lang) },
+            { id: 'Sexual', title: t('option_violence_sexual', lang) },
+            { id: 'Emotional', title: t('option_violence_emotional', lang) },
+            { id: 'Trafficking', title: t('option_violence_trafficking', lang) },
+            { id: 'option_other', title: t('option_other', lang) }
           ]
         }
       ]
@@ -180,7 +176,7 @@ export const promptViolenceType = async (to: string, lang: Language) => {
   };
   await sendInteractiveMessage(to, interactive);
 };
-
+// violenceType?: 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other' | string; // Allow string for 'Other: ...'
 export const promptPerpetratorKnown = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
@@ -196,23 +192,29 @@ export const promptPerpetratorKnown = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
+// in ./services/whatsapp.service.ts
+
+/**
+ * Sends the perpetrator relationship prompt.
+ * @param to The recipient's phone number.
+ * @param lang The selected language for the user.
+ */
 export const promptPerpetratorRelationship = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_perpetrator_relationship', lang) }, // CHANGED
+    body: { text: t('prompt_perpetrator_relationship', lang) },
     action: {
-      button: t('button_select_relationship'), // CHANGED
+      button: t('button_select_relationship'),
       sections: [
         {
-          title: t('section_relationship_types', lang), // Ensure this key exists
+          title: t('section_relationship_types', lang),
           rows: [
-            // Add corresponding 'option_*' keys to your translation file for these
-            { id: 'Spouse_Partner', title: 'Spouse/Partner' },
-            { id: 'Relative', title: 'Relative' },
-            { id: 'Teacher', title: 'Teacher' },
-            { id: 'Police_Authority', title: 'Police/Authority' },
-            { id: 'Stranger', title: 'Stranger' },
-            { id: 'other_relationship', title: t('option_other', lang) }
+            { id: 'Spouse/Partner', title: t('option_relationship_spouse', lang) },
+            { id: 'Relative', title: t('option_relationship_relative', lang) },
+            { id: 'Teacher', title: t('option_relationship_teacher', lang) },
+            { id: 'Police/Authority', title: t('option_relationship_authority', lang) },
+            { id: 'Stranger', title: t('option_relationship_stranger', lang) },
+            { id: 'option_other', title: t('option_other', lang) }
           ]
         }
       ]
@@ -260,20 +262,20 @@ export const promptHelpOrService = async (to: string, lang: Language, isDirectRe
 export const promptServiceSelection = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_select_services', lang) }, // Ensure this key exists
+    body: { text: t('prompt_select_services', lang) },
     action: {
-      button: t('button_select_service'), // CHANGED
+      button: t('button_select_service'),
       sections: [
         {
-          title: t('section_support_services', lang), // Ensure this key exists
+          title: t('section_support_services', lang),
           rows: [
-            // Add corresponding 'option_*' keys to your translation file for these
-            { id: 'Police_Security', title: 'Police/Security' },
-            { id: 'Medical_Support', title: 'Medical Support' },
-            { id: 'Legal_Advice', title: 'Legal Advice' },
-            { id: 'Counselling', title: 'Counselling' },
-            { id: 'Shelter_Safe_Home', title: 'Shelter or Safe Home' },
-            { id: 'other_service', title: t('option_other', lang) }
+            { id: 'Medical', title: t('option_service_medical', lang) },
+            { id: 'Psychological', title: t('option_service_psychological', lang) },
+            { id: 'Counselling', title: t('option_service_counselling', lang) },
+            { id: 'Police/Security', title: t('option_service_police', lang) },
+            { id: 'Legal', title: t('option_service_legal', lang) },
+            { id: 'Shelter', title: t('option_service_shelter', lang) },
+            { id: 'option_other', title: t('option_other', lang) }
           ]
         }
       ]

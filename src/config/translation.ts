@@ -248,6 +248,96 @@ export const translations: Translations = {
     Igbo: 'Ụlọ onye mere ya',
     Hausa: 'Gidan wanda ya aikata'
   },
+  option_violence_physical: {
+    English: 'Physical Violence',
+    Yoruba: 'Ìwà Ipá nípa Lílu',
+    Igbo: 'Ime Ihe Ike anụ Ahụ',
+    Hausa: 'Rikicin Jiki'
+  },
+  option_violence_sexual: {
+    English: 'Sexual Violence',
+    Yoruba: 'Ìwà Ipá nípa Ìbálòpọ̀',
+    Igbo: 'Ime Ihe Ike Mmekọahụ',
+    Hausa: "Rikicin Jima'i"
+  },
+  option_violence_emotional: {
+    English: 'Emotional / Psychological',
+    Yoruba: 'Ìwà Ipá nípa Ọpọlọ',
+    Igbo: 'Mmetụta / Nke Uche',
+    Hausa: 'Rikicin Hankali'
+  },
+  option_violence_trafficking: {
+    English: 'Human Trafficking',
+    Yoruba: 'Gbígbé Ènìyàn Sálọ',
+    Igbo: 'Ịzụ Ahịa Mmadụ',
+    Hausa: 'Fataucin Mutane'
+  },
+  option_service_medical: {
+    English: 'Medical Support',
+    Yoruba: 'Ìrànlọ́wọ́ Ìṣègùn',
+    Igbo: 'Nkwado Ahụike',
+    Hausa: 'Taimakon Likita'
+  },
+  option_service_psychological: {
+    English: 'Psychological Support',
+    Yoruba: 'Ìrànlọ́wọ́ Ọpọlọ',
+    Igbo: 'Nkwado Nke Uche',
+    Hausa: 'Taimakon Hankali'
+  },
+  option_service_counselling: {
+    English: 'Counselling',
+    Yoruba: 'Ìgbimọ̀ràn',
+    Igbo: 'Ndụmọdụ',
+    Hausa: 'Nasiha'
+  },
+  option_service_police: {
+    English: 'Police / Security',
+    Yoruba: 'Ọlọ́pàá / Ààbò',
+    Igbo: 'Ndị uwe ojii / Nchekwa',
+    Hausa: "'Yan Sanda / Tsaro"
+  },
+  option_service_legal: {
+    English: 'Legal Advice',
+    Yoruba: 'Ìgbimọ̀ràn Ofin',
+    Igbo: 'Ndụmọdụ Gbasara Iwu',
+    Hausa: "Shawarar Shari'a"
+  },
+  option_service_shelter: {
+    English: 'Shelter / Safe Home',
+    Yoruba: 'Ibùdó / Ilé Ààbò',
+    Igbo: 'Ebe obibi / Ụlọ Nchekwa',
+    Hausa: 'Matsuguni / Gida Mai Lafiya'
+  },
+  option_relationship_spouse: {
+    English: 'Spouse / Partner',
+    Yoruba: 'Ọkọ / Aya',
+    Igbo: 'Di / Nwunye',
+    Hausa: 'Miji / Mata'
+  },
+  option_relationship_relative: {
+    English: 'Relative',
+    Yoruba: 'Ìbátan',
+    Igbo: 'Onye ikwu',
+    Hausa: 'Dan uwa'
+  },
+  option_relationship_teacher: {
+    English: 'Teacher',
+    Yoruba: 'Olùkọ́',
+    Igbo: 'Onye nkụzi',
+    Hausa: 'Malami'
+  },
+  option_relationship_authority: {
+    English: 'Police / Authority',
+    Yoruba: 'Ọlọ́pàá / Aláṣẹ',
+    Igbo: 'Ndị uwe ojii / Ndị ọchịchị',
+    Hausa: "'Yan Sanda / Hukuma"
+  },
+  option_relationship_stranger: {
+    English: 'Stranger',
+    Yoruba: 'Àjèjì',
+    Igbo: 'Onye ọbịbịa',
+    Hausa: 'Bako'
+  },
   option_other: { English: 'Other', Yoruba: 'Òmíràn', Igbo: 'Ọzọ', Hausa: 'Wani' },
   // ... continue for other lists like violence types, relationships, services
 
@@ -325,6 +415,12 @@ export const translations: Translations = {
     Yoruba: 'A ń ṣayẹwo ipò fún ID Ìròyìn: {0}. A yóò pèsè àlàyé láìpẹ́.',
     Igbo: "Na-elele ọkwa maka ID Akụkọ: {0}. Anyị ga-enye mmelite n'oge adịghị anya.",
     Hausa: 'Duba matsayin ID na Rahoto: {0}. Za mu samar da sabuntawa nan ba da jimawa ba.'
+  },
+  error_submission_failed: {
+    English: "We're sorry, there was a technical problem submitting your report. Please try again in a few moments.",
+    Yoruba: 'A dúpẹ́, ṣùgbọ́n ìṣòro wà nígbà tí a fẹ́ gba ìròyìn yín. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansí.',
+    Igbo: "Ndo, enwere nsogbu teknụzụ na-edozi akụkọ gị. Biko nwaa ọzọ n'obere oge.",
+    Hausa: 'Yi haƙuri, an sami matsalar fasaha wajen gabatar da rahoton ku. Da fatan za a sake gwadawa anjima.'
   }
 };
 
