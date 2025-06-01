@@ -148,6 +148,12 @@ export const translations: Translations = {
     Igbo: "Biko kọwapụta enyemaka 'ọzọ' ịchọrọ.",
     Hausa: "Don Allah a fayyace 'wani' taimakon da kuke buƙata."
   },
+  prompt_select_services: {
+    English: 'Please select the help you need:',
+    Yoruba: 'Jọ̀wọ́ yan ìrànlọ́wọ́ tí o nílò:',
+    Igbo: 'Biko họrọ enyemaka ịchọrọ:',
+    Hausa: 'Don Allah zaɓi taimakon da kuke buƙata:'
+  },
   message_upload_media: {
     English: 'Okay, please upload your photo, video, or voice note now.',
     Yoruba: 'Ó dara, jọ̀wọ́ gbé fótò, fídíò, tàbí ìròyìn ohùn rẹ sílẹ̀ báyìí.',
