@@ -166,7 +166,7 @@ export const promptViolenceType = async (to: string, lang: Language) => {
           rows: [
             { id: 'Physical', title: t('option_violence_physical', lang) },
             { id: 'Sexual', title: t('option_violence_sexual', lang) },
-            { id: 'Emotional', title: t('option_violence_emotional', lang) },
+            { id: 'Emotional', title: t('option_violence_emotional', lang) }, // Likely culprit
             { id: 'Trafficking', title: t('option_violence_trafficking', lang) },
             { id: 'option_other', title: t('option_other', lang) }
           ]
@@ -176,7 +176,7 @@ export const promptViolenceType = async (to: string, lang: Language) => {
   };
   await sendInteractiveMessage(to, interactive);
 };
-// violenceType?: 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other' | string; // Allow string for 'Other: ...'
+
 export const promptPerpetratorKnown = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',

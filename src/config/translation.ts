@@ -261,10 +261,10 @@ export const translations: Translations = {
     Hausa: "Rikicin Jima'i"
   },
   option_violence_emotional: {
-    English: 'Emotional / Psychological',
+    English: 'Emotional Abuse',
     Yoruba: 'Ìwà Ipá nípa Ọpọlọ',
-    Igbo: 'Mmetụta / Nke Uche',
-    Hausa: 'Rikicin Hankali'
+    Igbo: 'Mmetụta Mmegbu',
+    Hausa: 'Cin Zarafin Hankali'
   },
   option_violence_trafficking: {
     English: 'Human Trafficking',
@@ -306,7 +306,7 @@ export const translations: Translations = {
     English: 'Shelter / Safe Home',
     Yoruba: 'Ibùdó / Ilé Ààbò',
     Igbo: 'Ebe obibi / Ụlọ Nchekwa',
-    Hausa: 'Matsuguni / Gida Mai Lafiya'
+    Hausa: 'Matsuguni / Gida'
   },
   option_relationship_spouse: {
     English: 'Spouse / Partner',
@@ -329,7 +329,7 @@ export const translations: Translations = {
   option_relationship_authority: {
     English: 'Police / Authority',
     Yoruba: 'Ọlọ́pàá / Aláṣẹ',
-    Igbo: 'Ndị uwe ojii / Ndị ọchịchị',
+    Igbo: 'Ndị Uwe Ojii/Ọchịchị',
     Hausa: "'Yan Sanda / Hukuma"
   },
   option_relationship_stranger: {
