@@ -283,6 +283,21 @@ export const promptServiceSelection = async (to: string, lang: Language) => {
   };
   await sendInteractiveMessage(to, interactive);
 };
+// in ./services/whatsapp.service.ts
+
+export const promptAddMoreServices = async (to: string, lang: Language) => {
+  const interactive = {
+    type: 'button',
+    body: { text: t('prompt_add_another_service', lang) },
+    action: {
+      buttons: [
+        { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
+        { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
+      ]
+    }
+  };
+  await sendInteractiveMessage(to, interactive);
+};
 
 export const promptConsent = async (to: string, lang: Language, isServiceRequest = false) => {
   const textKey = isServiceRequest ? 'prompt_consent_direct_service' : 'prompt_consent'; // CHANGED
@@ -303,10 +318,10 @@ export const promptConsent = async (to: string, lang: Language, isServiceRequest
 export const promptFollowUpUpdates = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('prompt_follow_up', lang) }, // CHANGED
+    body: { text: t('prompt_follow_up', lang) },
     action: {
       buttons: [
-        // CHANGED: Using consistent option keys for IDs
+        // CHANGED: Use consistent option IDs
         { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
         { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
       ]

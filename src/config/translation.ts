@@ -360,6 +360,12 @@ export const translations: Translations = {
     Igbo: 'Ị chọrọ nkwado ma ọ bụ enyemaka maka ihe omume a?',
     Hausa: 'Kuna son tallafi ko taimako game da wannan lamarin?'
   },
+  prompt_add_another_service: {
+    English: 'Service added. Would you like to select another service?',
+    Yoruba: 'A ti fi iṣẹ́ náà kún un. Ṣé o fẹ́ yan iṣẹ́ mìíràn?',
+    Igbo: 'Agbakwunyela ọrụ. Ị chọrọ ịhọrọ ọrụ ọzọ?',
+    Hausa: 'An ƙara sabis. Kuna so ku zaɓi wani sabis?'
+  },
   message_report_submitted: {
     English: 'Thank you. Your report has been submitted. Your Reference ID is: {0}.',
     Yoruba: 'A dúpẹ́. A ti gba ìròyìn yín. Nọ́mbà àmì rẹ ni: {0}.',
