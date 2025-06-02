@@ -26,7 +26,7 @@ app.get('/', (req: Request, res: Response) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/webhook', mainApiRouter);
-app.use('/api/stats', dashboardRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Global Error Handler (Basic)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
