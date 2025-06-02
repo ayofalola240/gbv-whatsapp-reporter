@@ -1,5 +1,9 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
+// Define possible status values
+export type IncidentStatus = 'New' | 'Investigating' | 'Referred' | 'Resolved' | 'Closed';
+export type ViolenceType = 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other';
+
 // Define the structure of the report document
 export interface IIncidentReport extends Document {
   referenceId: string;
@@ -10,12 +14,12 @@ export interface IIncidentReport extends Document {
   incidentTime?: string;
   locationText?: string;
   exactLocationType?: string;
-  violenceType?: 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other' | string; // Allow string for 'Other: ...'
+  violenceType?: ViolenceType | string;
   servicesRequested?: ('Medical' | 'Legal' | 'Shelter' | 'Psychological' | 'Police/Security' | 'Counselling' | 'Other' | string)[];
   perpetratorKnown?: boolean;
   perpetratorRelationship?: string;
   perpetratorCount?: string;
-  status: 'Submitted' | 'Escalated' | 'InProgress' | 'Closed' | 'Aborted';
+  status: IncidentStatus;
   pdfPath?: string;
   mediaFiles?: Types.ObjectId[];
   description?: string;
@@ -36,7 +40,7 @@ const IncidentReportSchema: Schema = new Schema(
     locationText: { type: String },
     status: {
       type: String,
-      enum: ['Submitted', 'Escalated', 'InProgress', 'Closed', 'Aborted'],
+      enum: ['New', 'Investigating', 'Referred', 'Resolved', 'Closed'],
       default: 'Submitted'
     },
     pdfPath: { type: String },
