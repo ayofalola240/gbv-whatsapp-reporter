@@ -41,7 +41,7 @@ const IncidentReportSchema: Schema = new Schema(
     status: {
       type: String,
       enum: ['New', 'Investigating', 'Referred', 'Resolved', 'Closed'],
-      default: 'Submitted'
+      default: 'New'
     },
     pdfPath: { type: String },
     mediaFiles: [{ type: Schema.Types.ObjectId, ref: 'MediaFile' }],
