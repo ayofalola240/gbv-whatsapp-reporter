@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 // import { logger } from './utils/logger'; // Already imported
 import mainApiRouter from './routes/whatsapp.routes'; // Corrected import for the main router
 import dashboardRoutes from './routes/dashboard.routes';
+import authRoutes from './routes/auth.routes';
 import { logger } from './utils/logger';
 import { config } from './config';
 
@@ -23,8 +24,9 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // API Routes
-app.use('/api', mainApiRouter);
-app.use('/api', dashboardRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/webhook', mainApiRouter);
+app.use('/api/stats', dashboardRoutes);
 
 // Global Error Handler (Basic)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

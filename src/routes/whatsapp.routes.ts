@@ -4,9 +4,9 @@ import { handleIncomingMessage, verifyWebhook } from '../controllers/whatsapp.co
 const router = Router();
 
 // Endpoint for Meta Cloud API to verify webhook
-router.get('/webhook/whatsapp', verifyWebhook);
+router.get('/whatsapp', verifyWebhook);
 
 // Endpoint for Meta Cloud API to send message updates
-router.post('/webhook/whatsapp', handleIncomingMessage);
+router.post('/whatsapp', handleIncomingMessage);
 
 export default router;

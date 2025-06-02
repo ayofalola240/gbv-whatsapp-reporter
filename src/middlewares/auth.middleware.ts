@@ -1,32 +1,44 @@
-// import { Request, Response, NextFunction } from 'express';
-// import jwt from 'jsonwebtoken';
-// import { User } from '../../models/user.model'; // Assuming User model
+import { Request, Response, NextFunction } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import asyncHandler from 'express-async-handler';
+import User, { IUser } from '../models/user.model';
+import { config } from '../config';
 
-// const JWT_SECRET = process.env.JWT_SECRET || 'defaultsecret';
+// Extend Express Request type to include user
+declare global {
+  namespace Express {
+    interface Request {
+      user?: IUser | null;
+    }
+  }
+}
 
-// export interface AuthenticatedRequest extends Request {
-//   user?: any; // Define a more specific type based on your User model
-// }
+export const protect = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  let token;
 
-// export const authenticateJWT = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-//   const authHeader = req.headers.authorization;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
 
-//   if (authHeader) {
-//     const token = authHeader.split(' ')[1];
-//     try {
-//       const decoded = jwt.verify(token, JWT_SECRET) as { id: string; role: string };
-//       // Optionally, fetch user from DB to ensure they still exist/are active
-//       const user = await User.findById(decoded.id).select('-passwordHash'); // [cite: 57]
-//       if (!user) {
-//         return res.sendStatus(403); // Forbidden if user not found
-//       }
-//       req.user = user; // Add user to request object
-//       next();
-//     } catch (err) {
-//       console.error('JWT Auth Error:', err);
-//       return res.sendStatus(403); // Forbidden (invalid token)
-//     }
-//   } else {
-//     res.sendStatus(401); // Unauthorized
-//   }
-// };
+      // Get user from the token ID (excluding password)
+      const userDoc = await User.findById(decoded.id).select('-password');
+      req.user = userDoc ? (userDoc.toObject() as IUser) : null;
+
+      if (!req.user) {
+        res.status(401);
+        throw new Error('Not authorized, user not found');
+      }
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401); // Unauthorized
+      throw new Error('Not authorized, token failed');
+    }
+  }
+
+  if (!token) {
+    res.status(401);
+    throw new Error('Not authorized, no token');
+  }
+});

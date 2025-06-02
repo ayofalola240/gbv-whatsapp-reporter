@@ -1,19 +1,60 @@
 // src/config/index.ts
-// Ensure you have this file or manage config directly in app.ts/server.ts
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-export const config = {
-  port: process.env.PORT || 3000,
-  mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/gbv_reporter',
-  jwtSecret: process.env.JWT_SECRET || 'your_super_secret_jwt_key',
-  whatsappVerifyToken: process.env.WHATSAPP_VERIFY_TOKEN || 'your_whatsapp_verify_token',
-  whatsappAccessToken: process.env.WHATSAPP_ACCESS_TOKEN || 'your_whatsapp_cloud_api_access_token',
-  whatsappPhoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID || 'your_whatsapp_phone_number_id',
-  fctaEmail: process.env.FCTA_EMAIL || 'womensaffairs@fcta.gov.ng',
-  smtpHost: process.env.SMTP_HOST,
-  smtpPort: parseInt(process.env.SMTP_PORT || '587'),
-  smtpUser: process.env.SMTP_USER,
-  smtpPass: process.env.SMTP_PASS,
+// Define the Config interface for type safety
+interface Config {
+  port: number;
+  mongodbUri: string;
+  jwtSecret: string;
+  jwtExpiresIn: string | number;
+  whatsappVerifyToken: string;
+  whatsappAccessToken: string;
+  whatsappPhoneNumberId: string;
+  fctaEmail: string;
+  smtpHost?: string; // Optional, as it may not be set
+  smtpPort: number;
+  smtpUser?: string; // Optional, as it may not be set
+  smtpPass?: string; // Optional, as it may not be set
+  publicUrl: string;
+}
+
+// Validate critical environment variables
+const requiredEnvVars = [
+  'JWT_SECRET',
+  'MONGODB_URI',
+  'WHATSAPP_VERIFY_TOKEN',
+  'WHATSAPP_ACCESS_TOKEN',
+  'WHATSAPP_PHONE_NUMBER_ID',
+  'FCTA_EMAIL'
+] as const;
+
+requiredEnvVars.forEach((envVar) => {
+  if (!process.env[envVar]) {
+    throw new Error(`Missing required environment variable: ${envVar}`);
+  }
+});
+
+// Parse and validate SMTP_PORT
+const smtpPortRaw = process.env.SMTP_PORT || '587';
+const smtpPort = parseInt(smtpPortRaw, 10);
+if (isNaN(smtpPort)) {
+  throw new Error(`Invalid SMTP_PORT: ${smtpPortRaw}. Must be a valid number.`);
+}
+
+export const config: Config = {
+  port: parseInt(process.env.PORT || '3000', 10), // Ensure number type
+  mongodbUri: process.env.MONGODB_URI!, // Non-null assertion since validated
+  jwtSecret: process.env.JWT_SECRET!, // Non-null assertion since validated
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30d',
+  whatsappVerifyToken: process.env.WHATSAPP_VERIFY_TOKEN!, // Non-null assertion since validated
+  whatsappAccessToken: process.env.WHATSAPP_ACCESS_TOKEN!, // Non-null assertion since validated
+  whatsappPhoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID!, // Non-null assertion since validated
+  fctaEmail: process.env.FCTA_EMAIL!, // Non-null assertion since validated
+  smtpHost: process.env.SMTP_HOST, // Optional, may be undefined
+  smtpPort, // Validated number
+  smtpUser: process.env.SMTP_USER, // Optional, may be undefined
+  smtpPass: process.env.SMTP_PASS, // Optional, may be undefined
   publicUrl: process.env.PUBLIC_URL || 'http://localhost:3000'
 };

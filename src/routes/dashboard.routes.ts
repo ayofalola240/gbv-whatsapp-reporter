@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { getDashboardStats } from '../controllers/dashboard.controller'; // Adjust path
-// import { protect } from '../middleware/authMiddleware'; // Assuming you might have this in TS
+import { protect } from '../middlewares/auth.middleware';
 
 const router = Router();
 
 // GET /api/dashboard/stats
-router.get('/dashboard/stats', /* protect, */ getDashboardStats);
+router.get('/stats', protect, getDashboardStats);
 
 export default router;
