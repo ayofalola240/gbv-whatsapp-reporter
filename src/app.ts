@@ -30,8 +30,25 @@ app.use('/api/dashboard', dashboardRoutes);
 
 // Global Error Handler (Basic)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  logger.error('Unhandled error:', err.stack);
-  res.status(500).json({ message: 'Something went wrong!', error: err.message });
+  logger.error(`Error: ${err.message}`, {
+    // Log the message and stack separately for better readability
+    method: req.method,
+    url: req.originalUrl,
+    ip: req.ip,
+    stack: err.stack
+  });
+
+  // If a status code has already been set on the response (e.g., by a controller), use it.
+  // Otherwise, default to 500 for unexpected server errors.
+  const statusCode = res.statusCode && res.statusCode >= 400 ? res.statusCode : 500;
+
+  res.status(statusCode).json({
+    // Send a more generic message for actual 500 errors.
+    // For specific errors (like 400, 401, 403, 404) thrown by controllers, err.message is usually more appropriate.
+    message: statusCode === 500 ? 'An unexpected error occurred on the server.' : err.message,
+    // Optionally, only include the error stack in development environment for security
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 });
 
 // Connect to MongoDB
