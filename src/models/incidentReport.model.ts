@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
 // Define possible status values
-export type IncidentStatus = 'New' | 'Investigating' | 'Referred' | 'Resolved' | 'Closed';
+export type IncidentStatus = 'New' | 'Investigating' | 'Referred' | 'Resolved' | 'Closed' | 'Escalated';
 export type ViolenceType = 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other';
 
 // Define the structure of the report document
@@ -27,6 +27,20 @@ export interface IIncidentReport extends Document {
   isDirectServiceRequest?: boolean;
   consentGiven: boolean;
   language: { type: String; default: 'English' };
+  internalNotes?: {
+    note: string;
+    byUser: Types.ObjectId;
+    createdAt: Date;
+  }[];
+  escalationDetails?: {
+    agency?: string;
+    escalatedAt?: Date;
+    notes?: string;
+  };
+  resolutionDetails?: {
+    resolvedAt?: Date;
+    notes?: string;
+  };
 }
 
 const IncidentReportSchema: Schema = new Schema(
@@ -40,8 +54,24 @@ const IncidentReportSchema: Schema = new Schema(
     locationText: { type: String },
     status: {
       type: String,
-      enum: ['New', 'Investigating', 'Referred', 'Resolved', 'Closed'],
+      enum: ['New', 'Investigating', 'Referred', 'Escalated', 'Resolved', 'Closed'],
       default: 'New'
+    },
+    internalNotes: [
+      {
+        note: { type: String, required: true },
+        byUser: { type: Schema.Types.ObjectId, ref: 'User' },
+        createdAt: { type: Date, default: Date.now }
+      }
+    ],
+    escalationDetails: {
+      agency: { type: String },
+      escalatedAt: { type: Date },
+      notes: { type: String }
+    },
+    resolutionDetails: {
+      resolvedAt: { type: Date },
+      notes: { type: String }
     },
     pdfPath: { type: String },
     mediaFiles: [{ type: Schema.Types.ObjectId, ref: 'MediaFile' }],
