@@ -41,7 +41,7 @@ export const getDashboardStats = async (req: Request, res: Response): Promise<vo
     });
 
     const pendingIncidents: number = await IncidentReport.countDocuments({
-      status: { $in: ['New', 'Investigating', 'Referred'] as IncidentStatus[] }
+      status: { $in: ['New', 'Investigating', 'Escalated'] as IncidentStatus[] }
     });
 
     const incidentsByViolenceTypeRaw = await IncidentReport.aggregate<{ _id: ViolenceType | string; value: number }>([
@@ -59,7 +59,7 @@ export const getDashboardStats = async (req: Request, res: Response): Promise<vo
       { $match: { status: { $ne: null, $nin: [''] } } },
       { $group: { _id: '$status', value: { $sum: 1 } } }
     ]);
-    const definedStatuses: IncidentStatus[] = ['New', 'Investigating', 'Referred', 'Resolved', 'Closed'];
+    const definedStatuses: IncidentStatus[] = ['New', 'Investigating', 'Escalated', 'Resolved', 'Closed'];
     const incidentStatusOverview: NameValue[] = definedStatuses.map((statusName) => {
       const found = incidentStatusOverviewRaw.find((item) => item._id === statusName);
       return { name: statusName, value: found ? found.value : 0 };
