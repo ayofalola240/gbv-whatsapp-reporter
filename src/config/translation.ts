@@ -71,7 +71,7 @@ export const translations: Translations = {
 
   // --- Incident Reporting Prompts (Questions) ---
   prompt_incident_date: {
-    English: 'When did this incident happen? (e.g., YYYY-MM-DD)',
+    English: 'When did this incident happen? (e.g., DD-MM-YYYY)',
     Yoruba: 'Nigba wo ni iṣẹlẹ yii ṣẹlẹ? (f.a, ODUN-OSU-OJO)',
     Igbo: 'Kedu mgbe ihe a mere? (d.o, AAAA-MM-DD)',
     Hausa: 'Yaushe wannan lamarin ya faru? (m.s, SHEKARA-WATA-RANA)'
@@ -153,6 +153,24 @@ export const translations: Translations = {
     Yoruba: 'Jọ̀wọ́ yan ìrànlọ́wọ́ tí o nílò:',
     Igbo: 'Biko họrọ enyemaka ịchọrọ:',
     Hausa: 'Don Allah zaɓi taimakon da kuke buƙata:'
+  },
+  prompt_confirm_phone: {
+    English: 'Are you using the same phone number for this report that we can use for contact?',
+    Yoruba: 'Ṣé nọ́mbà fóònù kan náà tí ẹ fi ń ṣe ìròyìn yìí ni a lè fi kàn sí yín?',
+    Igbo: 'Ị na-eji otu nọmba ekwentị maka akụkọ a nke anyị nwere ike iji kpọtụrụ gị?',
+    Hausa: 'Kuna amfani da lambar waya iri ɗaya don wannan rahoto da za mu iya amfani da ita don tuntuɓar ku?'
+  },
+  prompt_enter_different_phone: {
+    English: 'Okay, please enter the correct phone number you would like us to use for contact.',
+    Yoruba: 'Ó dára, jọ̀wọ́ tẹ nọ́mbà fóònù gangan tí ẹ fẹ́ kí á máa lò fún ìbánisọ̀rọ̀.',
+    Igbo: 'Ọ dị mma, biko tinye nọmba ekwentị ziri ezi ịchọrọ ka anyị jiri maka kọntaktị.',
+    Hausa: 'To, don Allah shigar da lambar wayar da ta dace da kuke son mu yi amfani da ita don tuntuɓar ku.'
+  },
+  confirmation_phone_saved: {
+    English: 'Thank you, we have saved the contact number.',
+    Yoruba: 'A dúpẹ́, a ti fi nọ́mbà ìbánisọ̀rọ̀ náà pamọ́.',
+    Igbo: 'Daalụ, anyị echekwala nọmba kọntaktị ahụ.',
+    Hausa: 'Na gode, mun adana lambar tuntuɓar.'
   },
   message_upload_media: {
     English: 'Okay, please upload your photo, video, or voice note now.',

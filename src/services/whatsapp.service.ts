@@ -329,3 +329,17 @@ export const promptFollowUpUpdates = async (to: string, lang: Language) => {
   };
   await sendInteractiveMessage(to, interactive);
 };
+
+export const promptConfirmPhoneNumber = async (to: string, lang: Language) => {
+  const interactive = {
+    type: 'button',
+    body: { text: t('prompt_confirm_phone', lang) },
+    action: {
+      buttons: [
+        { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
+        { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
+      ]
+    }
+  };
+  await sendInteractiveMessage(to, interactive);
+};

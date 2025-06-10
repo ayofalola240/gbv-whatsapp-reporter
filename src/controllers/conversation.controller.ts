@@ -71,14 +71,32 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'enter_name':
       session.reportData.reporterName = userResponseText;
-      await WhatsAppService.sendTextMessage(from, t('prompt_phone', session.language));
-      session.currentStep = 'enter_phone';
+      await WhatsAppService.promptConfirmPhoneNumber(from, session.language!);
+      session.currentStep = 'confirm_phone_number';
       break;
 
-    case 'enter_phone':
-      if (userResponseText.toLowerCase() !== 'skip') {
-        session.reportData.reporterPhone = userResponseText;
+    case 'confirm_phone_number':
+      if (userResponseText === 'option_yes') {
+        // User said 'Yes', so we automatically grab their WhatsApp number (`from`)
+        session.reportData.reporterPhone = from;
+        await WhatsAppService.sendTextMessage(from, t('confirmation_phone_saved', session.language!)); // Optional: Add a confirmation message
+        await WhatsAppService.promptIncidentOrHelp(from, session.language!);
+        session.currentStep = 'incident_or_help';
+      } else if (userResponseText === 'option_no') {
+        // User said 'No', so now we ask them to type the correct number
+        await WhatsAppService.sendTextMessage(from, t('prompt_enter_different_phone', session.language!));
+        session.currentStep = 'enter_different_phone';
+      } else {
+        // If the user's response is not 'option_yes' or 'option_no', re-ask the question.
+        await WhatsAppService.sendTextMessage(from, t('error_invalid_option', session.language!));
+        await WhatsAppService.promptConfirmPhoneNumber(from, session.language!);
       }
+      break;
+
+    case 'enter_different_phone':
+      // TODO: Add validation here to ensure it's a valid phone number.
+      session.reportData.reporterPhone = userResponseText;
+      await WhatsAppService.sendTextMessage(from, t('confirmation_phone_saved', session.language!)); // Optional: Add confirmation
       await WhatsAppService.promptIncidentOrHelp(from, session.language!);
       session.currentStep = 'incident_or_help';
       break;
