@@ -47,7 +47,6 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
   switch (session.currentStep) {
     case 'start':
-      await WhatsAppService.sendTextMessage(from, t('prompt_welcome'));
       await WhatsAppService.sendLanguageSelection(from);
       session.currentStep = 'select_language';
       break;
