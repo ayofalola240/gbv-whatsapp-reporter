@@ -16,10 +16,19 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     return;
   }
 
+  // const restartKeywords = ['restart', 'reset', 'menu', 'start over'];
+  // if (message.type === 'text' && restartKeywords.includes(message.text.body.toLowerCase().trim())) {
+  //   console.log(`User ${from} initiated a restart.`);
+  //   await SessionManager.deleteSession(from);
+  //   await WhatsAppService.sendLanguageSelection(from);
+  //   return;
+  // }
   const restartKeywords = ['restart', 'reset', 'menu', 'start over'];
   if (message.type === 'text' && restartKeywords.includes(message.text.body.toLowerCase().trim())) {
     console.log(`User ${from} initiated a restart.`);
     await SessionManager.deleteSession(from);
+    // ADDED: Specific restart message
+    await WhatsAppService.sendTextMessage(from, t('message_restart'));
     await WhatsAppService.sendLanguageSelection(from);
     return;
   }
@@ -38,6 +47,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
   switch (session.currentStep) {
     case 'start':
+      await WhatsAppService.sendTextMessage(from, t('prompt_welcome'));
       await WhatsAppService.sendLanguageSelection(from);
       session.currentStep = 'select_language';
       break;
@@ -103,7 +113,8 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'incident_or_help':
       if (userResponseText === 'option_report_incident') {
-        await WhatsAppService.sendTextMessage(from, t('prompt_incident_date', session.language));
+        await WhatsAppService.sendTextMessage(from, t('message_report_start', session.language!));
+        await WhatsAppService.sendTextMessage(from, t('prompt_incident_date', session.language!));
         session.currentStep = 'collect_date';
       } else if (userResponseText === 'option_request_help') {
         await WhatsAppService.promptServiceSelection(from, session.language!); // Changed from promptHelpOrService to directly show services
@@ -367,16 +378,17 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
         session.reportData.referenceId = refId;
 
         try {
+          await WhatsAppService.sendTextMessage(from, t('confirmation_report_saved', session.language!));
           await ReportService.saveIncidentReport(session.reportData);
-          await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language, refId));
-
-          if (session.currentStep === 'collect_consent_direct_service' || session.reportData.isDirectServiceRequest) {
-            // Check direct service flag
-            await WhatsAppService.sendTextMessage(from, t('message_service_connection', session.language!));
-          } else {
-            // It's a full incident report
-            await WhatsAppService.sendTextMessage(from, t('message_escalation', session.language!));
-          }
+          // await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language, refId));
+          // if (session.currentStep === 'collect_consent_direct_service' || session.reportData.isDirectServiceRequest) {
+          //   // Check direct service flag
+          //   await WhatsAppService.sendTextMessage(from, t('message_service_connection', session.language!));
+          // } else {
+          //   // It's a full incident report
+          //   await WhatsAppService.sendTextMessage(from, t('message_escalation', session.language!));
+          // }
+          await WhatsAppService.sendTextMessage(from, t('message_report_submitted', session.language!, refId));
 
           await WhatsAppService.promptFollowUpUpdates(from, session.language!);
           session.currentStep = 'ask_follow_up';

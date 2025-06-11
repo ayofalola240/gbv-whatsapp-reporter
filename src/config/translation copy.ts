@@ -19,19 +19,14 @@ export type Language = 'English' | 'Yoruba' | 'Igbo' | 'Hausa';
 export const translations: Translations = {
   // --- Welcome & Language ---
   // in ./config/translation.ts
+
   prompt_welcome: {
     English:
-      "Hello, you're not alone. This is the FCTA GBV Reporting Center. We're here to listen and help, no matter what you've experienced.",
-    Yoruba:
-      'Pẹlẹ o, o kò nìkan wà. Ibí ni Ibùdó Ìròyìn GBV ti FCTA. A wà níbí láti gbọ́ àti láti ràn ọ́ lọ́wọ́, láìka ohun tí o ti ní ìrírí rẹ̀.',
-    Igbo: "Ndeewo, ịnọghị naanị gị. Nke a bụ FCTA GBV Reporting Center. Anyị nọ ebe a iji gee ntị ma nyere aka, n'agbanyeghị ihe ị gabigara.",
-    Hausa: 'Sannu, ba kai kaɗai ba. Wannan Cibiyar Rahoto ta GBV ta FCTA ce. Muna nan don saurare da taimakawa, komai abin da ka fuskanta.'
-  },
-  prompt_language_selection: {
-    English: "Please choose the language that's easiest for you to communicate in.",
-    Yoruba: 'Jọ̀wọ́ yan èdè tí ó rọrùn jùlọ fún ọ láti bá sọ̀rọ̀.',
-    Igbo: 'Biko họrọ asụsụ kachasị mfe iji kwurịta okwu.',
-    Hausa: 'Don Allah zaɓi harshen da ya fi maka sauƙi don sadarwa.'
+      "Welcome to the FCTA GBV Reporting Center. Please select your language.\n\nTip: You can type 'Restart' at any time to begin again.",
+    Yoruba: "Ẹ ku abọ si Ile-iṣẹ Iroyin GBV ti FCTA. Jọwọ yan èdè rẹ.\n\nÌmọ̀ràn: O le tẹ 'Restart' nígbàkúgbà láti bẹ̀rẹ̀ lẹ́ẹ̀kansí.",
+    Igbo: "Nnọọ na FCTA GBV Reporting Center. Biko họrọ asụsụ gị.\n\nNdụmọdụ: Ị nwere ike pịnye 'Restart' n'oge ọ bụla iji malite ọzọ.",
+    Hausa:
+      "Barka da zuwa Cibiyar Rahoto ta GBV ta FCTA. Don Allah zaɓi harshenka.\n\nShawara: Kuna iya rubuta 'Restart' a kowane lokaci don farawa."
   },
   confirmation_language_set: {
     English: 'Language set to {0}.',
@@ -42,36 +37,36 @@ export const translations: Translations = {
 
   // --- Anonymity & Identity ---
   prompt_anonymity: {
-    English: 'Thank you. Before we continue, would you like to share your details or remain anonymous? Whatever you choose is okay.',
-    Yoruba: 'A dúpẹ́. Kí a tó tẹ̀síwájú, ṣé o fẹ́ pín àlàyé rẹ tàbí kí o wà ní ailorúkọ? Èyíkéyìí tí o bá yàn kò burú.',
-    Igbo: "Daalụ. Tupu anyị aga n'ihu, ị ga-achọ ịkekọrịta nkọwa gị ka ị nọgide na-amaghị aha gị? Ihe ọ bụla ị họọrọ dị mma.",
-    Hausa: 'Na gode. Kafin mu ci gaba, kuna so ku raba bayananku ko ku kasance ba a san ku ba? Duk abin da ka zaɓa yayi daidai.'
+    English: 'Would you like to remain anonymous or share your details with us?',
+    Yoruba: 'Ṣe o fẹ lati wa ni ailorukọ tabi pin awọn alaye rẹ pẹlu wa?',
+    Igbo: 'Ị chọrọ ka amaghị aha gị ma ọ bụ kesaa anyị nkọwa gị?',
+    Hausa: 'Kuna so ku kasance ba a san ku ba ko kuna son raba bayananku da mu?'
   },
   prompt_name: {
-    English: 'Please tell us your name, or you can use a nickname if that feels safer.',
-    Yoruba: 'Jọ̀wọ́ sọ orúkọ rẹ fún wa, tàbí o lè lo orúkọ àpèkasí bí o bá rò pé ó pèèsè ààbò tó pọ̀jù.',
-    Igbo: 'Biko gwa anyị aha gị, ma ọ bụ ị nwere ike iji aha otutu ma ọ bụrụ na ọ dị nchebe karị.',
-    Hausa: 'Don Allah gaya mana sunanka, ko kuma za ka iya amfani da sunan laƙabi idan hakan ya fi aminci.'
+    English: 'Please enter your name (or nickname).',
+    Yoruba: 'Jọwọ tẹ orukọ rẹ sii (tabi orukọ apeso).',
+    Igbo: 'Biko tinye aha gị (ma ọ bụ aha njirimara).',
+    Hausa: 'Don Allah shigar da sunanka (ko sunan laƙabi).'
   },
   prompt_phone: {
-    English: "Can we have a phone number in case we need to reach you to support you? You can type 'skip' if you prefer not to share.",
-    Yoruba: "A le gba nọ́mbà fóònù kan bí a bá nílò láti kàn sí ọ láti ràn ọ́ lọ́wọ́? O lè tẹ 'fò' bí o kò bá fẹ́ pín in.",
-    Igbo: "Anyị nwere ike ịnwe nọmba ekwentị ma ọ bụrụ na anyị chọrọ iru gị iji kwado gị? Ị nwere ike pịnye 'wụfee' ma ọ bụrụ na ịchọghị ịkọrọ.",
-    Hausa: "Za mu iya samun lambar waya idan muna buƙatar tuntuɓar ku don tallafa muku? Kuna iya rubuta 'tsallake' idan ba kwa son rabawa."
+    English: "Can we have a phone number to reach you on? (Type 'skip' to decline)",
+    Yoruba: "Ṣe a le ni nọmba foonu ti a le kan si ọ? (Tẹ 'fò' lati kọ)",
+    Igbo: "Anyị nwere ike ịnwe nọmba ekwentị gị? (Pịa 'wụfee' iji jụ)",
+    Hausa: "Za mu iya samun lambar waya? (Rubuta 'tsallake' don kin bayarwa)"
   },
   confirmation_anonymous: {
-    English: "Okay, your privacy is respected. You don't need to share any personal details unless you want to.",
-    Yoruba: 'Ó dára, a bọ̀wọ̀ fún àṣírí rẹ. Kò pọn dandan kí o pín àlàyé ara ẹni kankan àfi bí o bá fẹ́.',
-    Igbo: 'Ọ dị mma, a na-asọpụrụ nzuzo gị. Ikwesighi ịkekọrịta nkọwa nkeonwe ọ bụla belụsọ ma ịchọrọ.',
-    Hausa: 'To, an mutunta sirrinka. Ba kwa buƙatar raba kowane bayanan sirri sai dai idan kuna so.'
+    English: "That's okay. You can report anonymously.",
+    Yoruba: 'O dara. O le jabo lai sọ orukọ rẹ.',
+    Igbo: 'Ọ dị mma. Ị nwere ike ịkọ akụkọ na-enweghị aha.',
+    Hausa: 'Ba komai. Kuna iya bayar da rahoto ba tare da sanin sunanka ba.'
   },
 
   // --- Main Menu ---
   prompt_main_menu: {
-    English: "Please choose what you'd like to do today. We're here for you.",
-    Yoruba: 'Jọ̀wọ́ yan ohun tí o fẹ́ ṣe lónìí. A wà pẹ̀lú rẹ.',
-    Igbo: 'Biko họrọ ihe ị ga-achọ ime taa. Anyị nọ ebe a maka gị.',
-    Hausa: 'Don Allah zaɓi abin da kuke son yi a yau. Muna nan don ku.'
+    English: 'How can we help you today?',
+    Yoruba: 'Báwo ni a ṣe lè ràn ọ́ lọ́wọ́ lónìí?',
+    Igbo: 'Kedu ka anyị nwere ike isi nyere gị aka taa?',
+    Hausa: 'Ta yaya za mu iya taimaka muku a yau?'
   },
 
   // --- Incident Reporting Prompts (Questions) ---
@@ -82,31 +77,31 @@ export const translations: Translations = {
     Hausa: 'Yaushe wannan lamarin ya faru? (m.s, SHEKARA-WATA-RANA)'
   },
   prompt_incident_time: {
-    English: 'Around what time of day did it happen?',
+    English: 'What time of day did it happen?',
     Yoruba: 'Akoko wo ni o ṣẹlẹ ni ọjọ?',
     Igbo: 'Kedu oge n’ụbọchị ọ mere?',
     Hausa: 'Wani lokaci ne ya faru a rana?'
   },
   prompt_location_description: {
-    English: 'Where did it happen? You can describe the area or address as best as you can.',
+    English: 'Please describe where it happened (e.g., LGA, street, landmark).',
     Yoruba: 'Jọwọ ṣapejuwe ibi ti o ṣẹlẹ (f.a, LGA, òpópónà, àmì ilẹ̀).',
     Igbo: 'Biko kọwaa ebe ọ mere (d.o, LGA, okporo ụzọ, akara ala).',
     Hausa: 'Don Allah kwatanta inda ya faru (misali, LGA, titi, wani sanannen wuri).'
   },
   prompt_location_specific: {
-    English: 'Was it in any of these places?',
+    English: 'Where exactly did it happen?',
     Yoruba: 'Nibo gangan ni o ṣẹlẹ?',
     Igbo: 'Kedu ebe ọ kacha mee?',
     Hausa: 'A ina daidai ya faru?'
   },
   prompt_violence_type: {
-    English: 'What kind of harm did you experience or witness? You can choose more than one.',
+    English: 'What type of violence was experienced?',
     Yoruba: 'Iru iwa-ipa wo ni o ni iriri?',
     Igbo: 'Kedu ụdị ime ihe ike ị nwetara?',
     Hausa: 'Wani nau’in tashin hankali ne aka ji?'
   },
   prompt_perpetrator_known: {
-    English: 'Do you know who did this?',
+    English: 'Do you know the perpetrator(s)?',
     Yoruba: 'Ṣe o mọ ẹni (awọn) ti o ṣe e?',
     Igbo: 'Ị maara onye (ndị) mere ya?',
     Hausa: 'Kun san mai (masu) aikata laifi?'
@@ -118,31 +113,31 @@ export const translations: Translations = {
     Hausa: 'Menene alaƙar ku da su?'
   },
   prompt_perpetrator_count: {
-    English: 'How many people were involved?',
+    English: 'How many perpetrators were involved?',
     Yoruba: 'Melo ni awọn oluṣebi ti o kopa?',
     Igbo: 'Ole ndị mere ihe a sonyere?',
     Hausa: 'Masu aikata laifi nawa ne suka shiga?'
   },
   prompt_incident_description: {
-    English: "Please describe what happened in your own words. You can also use a voice note if that's easier for you.",
+    English: 'Please tell us briefly what happened.',
     Yoruba: 'Jọwọ sọ fun wa ni ṣoki ohun ti o ṣẹlẹ.',
     Igbo: 'Biko gwa anyị nkenke ihe mere.',
     Hausa: 'Don Allah gaya mana a takaice abin da ya faru.'
   },
   prompt_media_upload: {
-    English: 'Would you like to send us a picture, video, or voice note? This is optional only if it helps.',
+    English: 'You can also upload a photo, video, or voice note as evidence.',
     Yoruba: 'O tun le gbe fọto, fídíò, tabi akọsilẹ ohun soke gẹ́gẹ́ bí ẹ̀rí.',
     Igbo: 'Ị nwekwara ike bulite foto, vidiyo, ma ọ bụ ndetu olu dịka ihe akaebe.',
     Hausa: 'Hakanan kuna iya loda hoto, bidiyo, ko bayanin murya a matsayin shaida.'
   },
   prompt_other_location: {
-    English: 'Please tell us more about the location.',
+    English: "Please describe the 'other' location.",
     Yoruba: 'Jọ̀wọ́ ṣàpèjúwe ibòmíràn náà.',
     Igbo: "Biko kọwaa ebe 'ọzọ'.",
     Hausa: "Don Allah a kwatanta 'wata' wurin."
   },
   prompt_other_violence: {
-    English: 'Please describe what happened in your own words.',
+    English: "Please specify the 'other' type of violence.",
     Yoruba: "Jọ̀wọ́ ṣàlàyé irú ìwà ipá 'òmíràn' náà.",
     Igbo: "Biko kọwapụta ụdị ime ihe ike 'ọzọ'.",
     Hausa: "Don Allah a fayyace 'wani' nau'in tashin hankali."
@@ -154,7 +149,7 @@ export const translations: Translations = {
     Hausa: "Don Allah a fayyace 'wani' taimakon da kuke buƙata."
   },
   prompt_select_services: {
-    English: "Please choose the type of support you'd like. You can pick more than one.",
+    English: 'Please select the help you need:',
     Yoruba: 'Jọ̀wọ́ yan ìrànlọ́wọ́ tí o nílò:',
     Igbo: 'Biko họrọ enyemaka ịchọrọ:',
     Hausa: 'Don Allah zaɓi taimakon da kuke buƙata:'
@@ -289,24 +284,6 @@ export const translations: Translations = {
     Igbo: 'Mmetụta Mmegbu',
     Hausa: 'Cin Zarafin Hankali'
   },
-  option_violence_online: {
-    English: 'Online Abuse',
-    Yoruba: 'Ìwà Ipá lórí Ayélujára',
-    Igbo: 'Mmegbu Ịntanetị',
-    Hausa: 'Cin Zarafin Yanar Gizo'
-  },
-  option_violence_rape: {
-    English: 'Sexual Violence/Rape',
-    Yoruba: 'Ìwà Ipá nípa Ìbálòpọ̀',
-    Igbo: 'Ime Ihe Ike Mmekọahụ',
-    Hausa: "Rikicin Jima'i"
-  },
-  option_violence_forced_marriage: {
-    English: 'Forced Marriage',
-    Yoruba: 'Ìgbéyàwó Lóòótọ́',
-    Igbo: 'Akwụkwọ Nkwado Alụmdi na Nwunye',
-    Hausa: 'Auren Tilas'
-  },
   option_violence_trafficking: {
     English: 'Human Trafficking',
     Yoruba: 'Gbígbé Ènìyàn Sálọ',
@@ -337,7 +314,6 @@ export const translations: Translations = {
     Igbo: 'Ndị uwe ojii / Nchekwa',
     Hausa: "'Yan Sanda / Tsaro"
   },
-
   option_service_legal: {
     English: 'Legal Advice',
     Yoruba: 'Ìgbimọ̀ràn Ofin',
@@ -385,13 +361,10 @@ export const translations: Translations = {
 
   // --- Consent & Submission ---
   prompt_consent: {
-    English:
-      'Do you give your consent for us to share this information confidentially with the appropriate support organizations who can help you (like NAPTIP, NSCDC, or shelters)?',
-    Yoruba:
-      'Ṣé o fún wa ní ìyọǹda láti pín àlàyé yìí ní àṣírí pẹ̀lú àwọn ẹgbẹ́ ìrànlọ́wọ́ tó yẹ tí wọ́n lè ràn ọ́ lọ́wọ́ (bíi NAPTIP, NSCDC, tàbí àwọn ibùdó)?',
-    Igbo: 'Ị na-enye nkwenye gị ka anyị kesaa ozi a na nzuzo nye ndị otu nkwado kwesịrị ekwesị nke nwere ike inyere gị aka (dịka NAPTIP, NSCDC, ma ọ bụ ebe nchekwa)?',
-    Hausa:
-      'Kuna ba da izinin ku don mu raba wannan bayanin a asirce tare da ƙungiyoyin tallafi da suka dace waɗanda za su iya taimaka muku (kamar NAPTIP, NSCDC, ko matsuguni)?'
+    English: 'Do you consent for us to share this report with authorized support services?',
+    Yoruba: 'Ṣé o gbà fún wa láti pín ìròyìn yìí pẹ̀lú àwọn ilé-iṣẹ́ ìrànlọ́wọ́?',
+    Igbo: 'Ị kwenyere ka anyị kesaa akụkọ a na ọrụ nkwado enyere ikike?',
+    Hausa: 'Ka amince mu raba wannan rahoto ga hukumomin tallafi masu izini?'
   },
   prompt_consent_direct_service: {
     English: 'To connect you with services, we need your consent to share your details.',
@@ -400,34 +373,22 @@ export const translations: Translations = {
     Hausa: 'Don haɗa ku da sabis, muna buƙatar izinin ku don raba bayananku.'
   },
   prompt_need_support_incident: {
-    English: 'Do you need any help or support right now? We can help connect you.',
+    English: 'Would you like support or help for this incident?',
     Yoruba: 'Ṣe o fẹ́ àtìlẹyìn tàbí ìrànlọ́wọ́ fún ìṣẹ̀lẹ̀ yìí?',
     Igbo: 'Ị chọrọ nkwado ma ọ bụ enyemaka maka ihe omume a?',
     Hausa: 'Kuna son tallafi ko taimako game da wannan lamarin?'
   },
   prompt_add_another_service: {
-    English: 'Would you like to add another?',
+    English: 'Service added. Would you like to select another service?',
     Yoruba: 'A ti fi iṣẹ́ náà kún un. Ṣé o fẹ́ yan iṣẹ́ mìíràn?',
     Igbo: 'Agbakwunyela ọrụ. Ị chọrọ ịhọrọ ọrụ ọzọ?',
     Hausa: 'An ƙara sabis. Kuna so ku zaɓi wani sabis?'
   },
-  message_consent_intro: {
-    English: 'Thank you for sharing this with us. We respect your story and your choices.',
-    Yoruba: 'A dúpẹ́ pé o pín èyí pẹ̀lú wa. A bọ̀wọ̀ fún ìtàn rẹ àti àwọn ìpinnu rẹ.',
-    Igbo: 'Daalụ maka ịkọrọ anyị nke a. Anyị na-asọpụrụ akụkọ gị na nhọrọ gị.',
-    Hausa: 'Na gode da raba wannan da mu. Muna girmama labarinka da zaɓinka.'
-  },
   message_report_submitted: {
-    English: "Your Reference ID is: {0}. Keep this if you'd like to check back.",
-    Yoruba: 'Nọ́mbà Àmì Ìdánimọ̀ rẹ ni: {0}. Pa á mọ́ bí o bá fẹ́ yẹ̀ ẹ́ wò ní ọjọ́ iwájú.',
-    Igbo: 'ID ntụaka gị bụ: {0}. Debe nke a ma ọ bụrụ na ị ga-achọ ịlele azụ.',
-    Hausa: 'ID ɗin Maganarku shine: {0}. Rike wannan idan kuna son dubawa.'
-  },
-  message_report_start: {
-    English: "Take your time. Let's go through what happened, one step at a time.",
-    Yoruba: 'Máa farabalẹ̀. Jẹ́ kí a gbé ohun tó ṣẹlẹ̀ yẹ̀wò ní ìṣísẹ̀-n-tẹ̀lé.',
-    Igbo: "Wepụta oge gị. Ka anyị gafee ihe merenụ, otu nzọụkwụ n'otu oge.",
-    Hausa: 'Ka dauki lokacinka. Mu bi abin da ya faru, mataki-mataki.'
+    English: 'Thank you. Your report has been submitted. Your Reference ID is: {0}.',
+    Yoruba: 'A dúpẹ́. A ti gba ìròyìn yín. Nọ́mbà àmì rẹ ni: {0}.',
+    Igbo: 'Daalụ. Edonyela akụkọ gị. ID ntụaka gị bụ: {0}.',
+    Hausa: 'Na gode. An gabatar da rahoton ku. ID ɗin ku shine: {0}.'
   },
   message_escalation: {
     English: 'We will escalate this to the appropriate agency. Someone may contact you.',
@@ -442,14 +403,15 @@ export const translations: Translations = {
     Hausa: 'Za mu haɗa ku da mai bada sabis da ya dace nan ba da jimawa ba.'
   },
   message_consent_refused: {
-    English: 'We respect your decision. We will not share your information. If you change your mind, you can start again anytime.',
-    Yoruba: 'A bọ̀wọ̀ fún ìpinnu rẹ. A kò ní pín àlàyé rẹ. Bí o bá yí èrò rẹ padà, o lè bẹ̀rẹ̀ lẹ́ẹ̀kansí nígbàkúgbà.',
-    Igbo: 'Anyị na-asọpụrụ mkpebi gị. Anyị agaghị ekesa ozi gị. Ọ bụrụ na ị gbanwee obi gị, ịnwere ike ịmalite ọzọ oge ọ bụla.',
-    Hausa: "Muna girmama shawararku. Ba za mu raba bayananku ba. Idan kun canza ra'ayinku, kuna iya sake farawa kowane lokaci."
+    English: 'We understand. Without consent, we cannot proceed. You can come back anytime.',
+    Yoruba: 'A yé wa. Láìsí ìyọǹda, a kò lè tẹ̀síwájú. O lè padà wá nígbàkúgbà.',
+    Igbo: "Anyị ghọtara. Na-enweghị nkwenye, anyị enweghị ike ịga n'ihu.",
+    Hausa: 'Mun fahimta. Ba tare da izini ba, ba za mu iya ci gaba ba. Kuna iya dawowa.'
   },
+
   // --- Status & Follow-up ---
   prompt_follow_up: {
-    English: 'Would you like to get updates about your case?',
+    English: 'Would you like to receive periodic updates on your report?',
     Yoruba: 'Ṣé o fẹ́ máa gba ìsọfúnni lórí ìròyìn rẹ?',
     Igbo: 'Ị ga-achọ ịnata mmelite oge ụfọdụ na akụkọ gị?',
     Hausa: 'Kuna so ku sami sabuntawa na lokaci-lokaci akan rahoton ku?'
@@ -478,23 +440,11 @@ export const translations: Translations = {
     Igbo: "Na-elele ọkwa maka ID Akụkọ: {0}. Anyị ga-enye mmelite n'oge adịghị anya.",
     Hausa: 'Duba matsayin ID na Rahoto: {0}. Za mu samar da sabuntawa nan ba da jimawa ba.'
   },
-  message_restart: {
-    English: "No problem. Let's start fresh. We're still here with you.",
-    Yoruba: 'Kò sí ìṣòro. Jẹ́ kí a bẹ̀rẹ̀ tuntun. A ṣì wà pẹ̀lú rẹ.',
-    Igbo: 'Nsogbu adịghị. Ka anyị malite ọzọ. Anyị ka nọnyeere gị.',
-    Hausa: 'Babu matsala. Mu fara sabo. Har yanzu muna tare da ku.'
-  },
   error_submission_failed: {
     English: "We're sorry, there was a technical problem submitting your report. Please try again in a few moments.",
     Yoruba: 'A dúpẹ́, ṣùgbọ́n ìṣòro wà nígbà tí a fẹ́ gba ìròyìn yín. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansí.',
     Igbo: "Ndo, enwere nsogbu teknụzụ na-edozi akụkọ gị. Biko nwaa ọzọ n'obere oge.",
     Hausa: 'Yi haƙuri, an sami matsalar fasaha wajen gabatar da rahoton ku. Da fatan za a sake gwadawa anjima.'
-  },
-  confirmation_report_saved: {
-    English: 'Thank you. We are now saving your report securely and sending it to the right agency.',
-    Yoruba: 'A dúpẹ́. A ti ń fi ìròyìn rẹ pamọ́ sí ibi ààbò, a sì ti ń fi í ránṣẹ́ sí àjọ tó yẹ.',
-    Igbo: 'Daalụ. Anyị na-echekwa akụkọ gị ugbu a ma na-eziga ya na ụlọ ọrụ ziri ezi.',
-    Hausa: 'Na gode. Yanzu muna adana rahotonku cikin aminci kuma muna aika shi zuwa ga hukumar da ta dace.'
   }
 };
 
