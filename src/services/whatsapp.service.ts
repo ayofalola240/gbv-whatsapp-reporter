@@ -163,12 +163,12 @@ export const promptViolenceType = async (to: string, lang: Language) => {
       sections: [
         {
           title: t('section_violence_types', lang),
-          // CHANGED: Rows updated to match the PDF dialogue
           rows: [
             { id: 'Sexual', title: t('option_violence_sexual', lang, 'Sexual') },
             { id: 'Physical', title: t('option_violence_physical', lang, 'Physical') },
             { id: 'Emotional', title: t('option_violence_emotional', lang, 'Emotional') },
             { id: 'Online abuse', title: t('option_violence_online', lang, 'Online abuse') },
+            { id: 'Trafficking', title: t('option_violence_Trafficking', lang, 'Trafficking') },
             { id: 'Rape', title: t('option_violence_rape', lang, 'Rape') },
             { id: 'Forced Marriage', title: t('option_violence_forced_marriage', lang, 'Forced Marriage') },
             { id: 'option_other', title: t('option_other', lang) }
