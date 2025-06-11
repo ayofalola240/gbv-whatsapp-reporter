@@ -2,7 +2,7 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 
 // Define possible status values
 export type IncidentStatus = 'New' | 'Investigating' | 'Referred' | 'Resolved' | 'Closed' | 'Escalated';
-export type ViolenceType = 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Other';
+export type ViolenceType = 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' | 'Rape' | 'Other';
 
 // Define the structure of the report document
 export interface IIncidentReport extends Document {

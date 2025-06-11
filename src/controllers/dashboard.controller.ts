@@ -50,16 +50,7 @@ export const getDashboardStats = async (req: Request, res: Response): Promise<vo
       { $sort: { value: -1 } }
     ]);
 
-    const definedViolenceTypes: (ViolenceType | string)[] = [
-      'Physical',
-      'Sexual',
-      'Emotional',
-      'Trafficking',
-      'Rape',
-      'Online abuse',
-      'Forced Marriage',
-      'option_other'
-    ];
+    const definedViolenceTypes: (ViolenceType | string)[] = ['Physical', 'Sexual', 'Emotional', 'Trafficking', 'Rape', 'option_other'];
     const incidentsByViolenceType: NameValue[] = definedViolenceTypes.map((typeName) => {
       const found = incidentsByViolenceTypeRaw.find((item) => item._id === typeName);
       return { name: typeName, value: found ? found.value : 0 };

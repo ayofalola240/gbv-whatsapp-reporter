@@ -175,16 +175,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
       break;
 
     case 'collect_violence_type':
-      const validViolenceOptions = [
-        'Physical',
-        'Sexual',
-        'Emotional',
-        'Trafficking',
-        'Rape',
-        'Online abuse',
-        'Forced Marriage',
-        'option_other'
-      ];
+      const validViolenceOptions = ['Physical', 'Sexual', 'Emotional', 'Trafficking', 'Rape', 'option_other'];
       if (!validViolenceOptions.includes(userResponseText)) {
         await WhatsAppService.sendTextMessage(from, t('error_invalid_option', session.language!));
         await WhatsAppService.promptViolenceType(from, session.language!);
