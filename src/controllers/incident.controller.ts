@@ -3,20 +3,32 @@ import asyncHandler from 'express-async-handler';
 import IncidentReport from '../models/incidentReport.model';
 // Define types for request bodies if needed, e.g., IUpdateStatusBody, IEscalateBody
 
-// GET /api/incidents - Get all incidents (with pagination and filtering)
+// GET /api/incidents - Get all incidents (with filtering, search, and pagination)
 export const getAllIncidents = asyncHandler(async (req: Request, res: Response) => {
-  // Implement pagination (e.g., ?page=1&limit=10)
-  // Implement filtering (e.g., ?status=New&violenceType=Physical)
-  // Implement sorting (e.g., ?sortBy=createdAt&order=desc)
-  const incidents = await IncidentReport.find({
-    /* your filters */
-  });
-  // .sort({ createdAt: -1 })
-  // .skip(pageSize * (page - 1))
-  // .limit(pageSize);
-  // const total = await IncidentReport.countDocuments({ /* your filters */ });
-  // res.json({ incidents, page, pages: Math.ceil(total / pageSize), total });
-  res.json(await IncidentReport.find().sort({ createdAt: -1 })); // Simplified for now
+  const { status, violenceType, search } = req.query;
+
+  // Build the query object
+  const query: any = {};
+
+  if (status) {
+    query.status = status;
+  }
+  if (violenceType) {
+    query.violenceType = violenceType;
+  }
+  if (search) {
+    // Basic search across multiple fields using a case-insensitive regex
+    const searchRegex = new RegExp(search as string, 'i');
+    query.$or = [{ referenceId: searchRegex }, { description: searchRegex }, { locationText: searchRegex }];
+  }
+
+  // You can add pagination here later if needed
+  // For now, we fetch all matching documents
+  const incidents = await IncidentReport.find(query).sort({ createdAt: -1 });
+
+  const total = await IncidentReport.countDocuments(query);
+
+  res.json({ incidents, total }); // Send back incidents and total count
 });
 
 // GET /api/incidents/:id - Get a single incident by ID
