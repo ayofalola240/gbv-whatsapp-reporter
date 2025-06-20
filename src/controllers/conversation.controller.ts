@@ -154,7 +154,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
     case 'collect_exact_location_type':
       const validLocationOptions = ['Home', 'School', 'Workplace', 'Street_or_Road', 'Perpetrators_house', 'option_other'];
       if (!validLocationOptions.includes(userResponseText)) {
-        await WhatsAppService.sendTextMessage(from, t('error_invalid_option', session.language!)); // Ensure lang is passed
+        await WhatsAppService.sendTextMessage(from, t('error_invalid_option', session.language!));
         await WhatsAppService.promptExactLocationType(from, session.language!);
         break;
       }
@@ -163,13 +163,20 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
         await WhatsAppService.sendTextMessage(from, t('prompt_other_location', session.language!));
         session.currentStep = 'collect_other_location_detail';
       } else {
-        await WhatsAppService.promptViolenceType(from, session.language!);
-        session.currentStep = 'collect_violence_type';
+        await WhatsAppService.promptAreaCouncil(from, session.language!);
+        session.currentStep = 'collect_area_council';
       }
       break;
 
     case 'collect_other_location_detail':
       session.reportData.exactLocationType = `Other: ${userResponseText}`;
+      await WhatsAppService.promptViolenceType(from, session.language!);
+      session.currentStep = 'collect_area_council';
+      break;
+
+    case 'collect_area_council':
+      // TODO: Add validation for area council options
+      session.reportData.areaCouncil = userResponseText;
       await WhatsAppService.promptViolenceType(from, session.language!);
       session.currentStep = 'collect_violence_type';
       break;

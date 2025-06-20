@@ -344,3 +344,27 @@ export const promptConfirmPhoneNumber = async (to: string, lang: Language) => {
   };
   await sendInteractiveMessage(to, interactive);
 };
+
+export const promptAreaCouncil = async (to: string, lang: Language) => {
+  const interactive = {
+    type: 'list',
+    body: { text: t('prompt_area_council', lang) },
+    action: {
+      button: t('button_select_area_council', lang),
+      sections: [
+        {
+          title: t('section_area_councils', lang),
+          rows: [
+            { id: 'AMAC', title: t('option_amac', lang) },
+            { id: 'Bwari', title: t('option_bwari', lang) },
+            { id: 'Gwagwalada', title: t('option_gwagwalada', lang) },
+            { id: 'Kuje', title: t('option_kuje', lang) },
+            { id: 'Kwali', title: t('option_kwali', lang) },
+            { id: 'Abaji', title: t('option_abaji', lang) }
+          ]
+        }
+      ]
+    }
+  };
+  await sendInteractiveMessage(to, interactive);
+};

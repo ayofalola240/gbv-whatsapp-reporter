@@ -7,6 +7,7 @@ export type ViolenceType = 'Physical' | 'Sexual' | 'Emotional' | 'Trafficking' |
 // Define the structure of the report document
 export interface IIncidentReport extends Document {
   referenceId: string;
+  areaCouncil?: string;
   isAnonymous: boolean;
   reporterName?: string;
   reporterPhone?: string;
@@ -52,6 +53,7 @@ const IncidentReportSchema: Schema = new Schema(
     incidentDate: { type: String },
     incidentTime: { type: String },
     locationText: { type: String },
+    areaCouncil: { type: String },
     status: {
       type: String,
       enum: ['New', 'Investigating', 'Referred', 'Escalated', 'Resolved', 'Closed'],

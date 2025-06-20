@@ -184,6 +184,20 @@ export const translations: Translations = {
     Igbo: 'Ọ dị mma, biko bulite foto, vidiyo, ma ọ bụ ndekọ olu gị ugbu a.',
     Hausa: 'To, don Allah a loda hotonku, bidiyo, ko sakon murya yanzu.'
   },
+  // Add these keys inside the 'translations' object
+
+  prompt_area_council: {
+    English: 'Please select the Area Council where the incident occurred.',
+    Yoruba: 'Jọ̀wọ́ yan Àgbègbè Ìjọba (Area Council) tí iṣẹlẹ̀ náà ti ṣẹlẹ̀.',
+    Igbo: 'Biko họrọ Council mpaghara ebe ihe omume ahụ mere.',
+    Hausa: 'Don Allah zaɓi Hukumar Yankin inda lamarin ya faru.'
+  },
+  button_select_area_council: {
+    English: 'Select Area Council',
+    Yoruba: 'Yan Àgbègbè Ìjọba',
+    Igbo: 'Họrọ Council mpaghara',
+    Hausa: 'Zaɓi Hukumar Yankin'
+  },
 
   // --- Buttons & Options (All <= 20 chars) ---
   button_select_language: { English: 'Select Language', Yoruba: 'Yan Ede', Igbo: 'Họrọ Asụsụ', Hausa: 'Zaɓi Harshe' },
@@ -206,6 +220,23 @@ export const translations: Translations = {
     Igbo: 'Họrọ nhọrọ',
     Hausa: 'Zaɓi wani zaɓi'
   },
+  section_area_councils: {
+    English: 'Abuja Area Councils',
+    Yoruba: 'Àgbègbè Ìjọba Abuja',
+    Igbo: 'Ndị ọchịchị mpaghara Abuja',
+    Hausa: 'Hukumomin Yankin Abuja'
+  },
+  option_amac: { English: 'AMAC (City Center)', Yoruba: 'AMAC (Àárín Ilẹ̀)', Igbo: 'AMAC (Ebe Obodo)', Hausa: 'AMAC (Cibiyar Birni)' },
+  option_bwari: { English: 'Bwari Area Council', Yoruba: 'Bwari Area Council', Igbo: 'Bwari Area Council', Hausa: 'Bwari Area Council' },
+  option_gwagwalada: {
+    English: 'Gwagwalada Area Council',
+    Yoruba: 'Gwagwalada Area Council',
+    Igbo: 'Gwagwalada Area Council',
+    Hausa: 'Gwagwalada Area Council'
+  },
+  option_kuje: { English: 'Kuje Area Council', Yoruba: 'Kuje Area Council', Igbo: 'Kuje Area Council', Hausa: 'Kuje Area Council' },
+  option_kwali: { English: 'Kwali Area Council', Yoruba: 'Kwali Area Council', Igbo: 'Kwali Area Council', Hausa: 'Kwali Area Council' },
+  option_abaji: { English: 'Abaji Area Council', Yoruba: 'Abaji Area Council', Igbo: 'Abaji Area Council', Hausa: 'Abaji Area Council' },
   option_start_over: {
     English: 'Start Over',
     Yoruba: 'Bẹ̀rẹ̀ Lẹ́ẹ̀kansí',
