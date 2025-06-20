@@ -154,38 +154,12 @@ export const promptExactLocationType = async (to: string, lang: Language) => {
   await sendInteractiveMessage(to, interactive);
 };
 
-// export const promptViolenceType = async (to: string, lang: Language) => {
-//   const interactive = {
-//     type: 'list',
-//     body: { text: t('prompt_violence_type', lang) },
-//     action: {
-//       button: t('button_select_violence'),
-//       sections: [
-//         {
-//           title: t('section_violence_types', lang),
-//           rows: [
-//             { id: 'Sexual', title: t('option_violence_sexual', lang) },
-//             { id: 'Physical', title: t('option_violence_physical', lang) },
-//             { id: 'Emotional', title: t('option_violence_emotional', lang) },
-//             { id: 'Trafficking', title: t('option_violence_Trafficking', lang) },
-//             { id: 'Rape', title: t('option_violence_rape', lang) },
-//             { id: 'option_other', title: t('option_other', lang) }
-//           ]
-//         }
-//       ]
-//     }
-//   };
-//   await sendInteractiveMessage(to, interactive);
-// };
-
-// Replace the old promptViolenceType function with this one
-
 export const promptViolenceType = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
     body: { text: t('prompt_violence_type', lang) },
     action: {
-      button: t('button_select_violence', lang),
+      button: t('button_select_violence'),
       sections: [
         {
           title: t('section_violence_types', lang),
@@ -193,7 +167,8 @@ export const promptViolenceType = async (to: string, lang: Language) => {
             { id: 'Sexual', title: t('option_violence_sexual', lang) },
             { id: 'Physical', title: t('option_violence_physical', lang) },
             { id: 'Emotional', title: t('option_violence_emotional', lang) },
-            { id: 'Trafficking', title: t('option_violence_Trafficking', lang) },
+            // { id: 'Trafficking', title: t('option_violence_Trafficking', lang) },
+            { id: 'Trafficking', title: t('option_trafficking', lang) },
             { id: 'Rape', title: t('option_violence_rape', lang) },
             { id: 'option_other', title: t('option_other', lang) }
           ]

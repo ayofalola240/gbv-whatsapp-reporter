@@ -345,11 +345,17 @@ export const translations: Translations = {
     Igbo: 'Họrọ Ụdị Ime Ihe Ike',
     Hausa: "Zaɓi Nau'in Rikici"
   },
-  option_violence_trafficking: {
-    English: 'Human Trafficking',
-    Yoruba: 'Gbígbé Ènìyàn Sálọ',
-    Igbo: 'Ịzụ Ahịa Mmadụ',
-    Hausa: 'Fataucin Mutane'
+  // option_violence_trafficking: {
+  //   English: 'Human Trafficking',
+  //   Yoruba: 'Gbígbé Ènìyàn Sálọ',
+  //   Igbo: 'Ịzụ Ahịa Mmadụ',
+  //   Hausa: 'Fataucin Mutane'
+  // },
+  option_trafficking: {
+    English: 'Trafficking',
+    Yoruba: 'Ìròyìn Ìṣẹ̀lẹ̀',
+    Igbo: 'Nkwado Ahụike',
+    Hausa: 'Taimakon Likita'
   },
   option_service_medical: {
     English: 'Medical Support',
