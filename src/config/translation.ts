@@ -100,7 +100,7 @@ export const translations: Translations = {
     Hausa: 'A ina daidai ya faru?'
   },
   prompt_violence_type: {
-    English: 'What kind of harm did you experience or witness? You can choose more than one.',
+    English: 'What type of violence was experienced?',
     Yoruba: 'Iru iwa-ipa wo ni o ni iriri?',
     Igbo: 'Kedu ụdị ime ihe ike ị nwetara?',
     Hausa: 'Wani nau’in tashin hankali ne aka ji?'
@@ -123,6 +123,7 @@ export const translations: Translations = {
     Igbo: 'Ole ndị mere ihe a sonyere?',
     Hausa: 'Masu aikata laifi nawa ne suka shiga?'
   },
+
   prompt_incident_description: {
     English: "Please describe what happened in your own words. You can also use a voice note if that's easier for you.",
     Yoruba: 'Jọwọ sọ fun wa ni ṣoki ohun ti o ṣẹlẹ.',
@@ -307,6 +308,12 @@ export const translations: Translations = {
     Igbo: 'Akwụkwọ Nkwado Alụmdi na Nwunye',
     Hausa: 'Auren Tilas'
   },
+  button_select_violence_type: {
+    English: 'Select Violence Type',
+    Yoruba: 'Yan Irú Ìwà Ipá',
+    Igbo: 'Họrọ Ụdị Ime Ihe Ike',
+    Hausa: "Zaɓi Nau'in Rikici"
+  },
   option_violence_trafficking: {
     English: 'Human Trafficking',
     Yoruba: 'Gbígbé Ènìyàn Sálọ',
@@ -380,6 +387,7 @@ export const translations: Translations = {
     Igbo: 'Onye ọbịbịa',
     Hausa: 'Bako'
   },
+
   option_other: { English: 'Other', Yoruba: 'Òmíràn', Igbo: 'Ọzọ', Hausa: 'Wani' },
   // ... continue for other lists like violence types, relationships, services
 
