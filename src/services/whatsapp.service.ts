@@ -167,8 +167,7 @@ export const promptViolenceType = async (to: string, lang: Language) => {
             { id: 'Sexual', title: t('option_violence_sexual', lang) },
             { id: 'Physical', title: t('option_violence_physical', lang) },
             { id: 'Emotional', title: t('option_violence_emotional', lang) },
-            // { id: 'Trafficking', title: t('option_violence_Trafficking', lang) },
-            { id: 'Trafficking', title: t('option_trafficking', lang) },
+            { id: 'Trafficking', title: t('option_violence_trafficking', lang) },
             { id: 'Rape', title: t('option_violence_rape', lang) },
             { id: 'option_other', title: t('option_other', lang) }
           ]
