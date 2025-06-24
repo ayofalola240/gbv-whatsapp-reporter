@@ -46,7 +46,7 @@ export const sendInteractiveMessage = async (to: string, interactive: any) => {
 export const sendLanguageSelection = async (to: string) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_welcome') }, // CHANGED
+    body: { text: t('prompt_welcome') }, //
     action: {
       button: t('button_select_language'),
       sections: [
@@ -72,7 +72,7 @@ export const promptAnonymity = async (to: string, lang: Language) => {
     body: { text: t('prompt_anonymity', lang) },
     action: {
       buttons: [
-        // CHANGED: Using consistent option keys for IDs and titles
+        // : Using consistent option keys for IDs and titles
         { type: 'reply', reply: { id: 'option_remain_anonymous', title: t('option_remain_anonymous', lang) } },
         { type: 'reply', reply: { id: 'option_share_details', title: t('option_share_details', lang) } }
       ]
@@ -85,7 +85,7 @@ export const promptAnonymity = async (to: string, lang: Language) => {
 
 export const promptIncidentOrHelp = async (to: string, lang: Language) => {
   const interactive = {
-    type: 'list', // CHANGED from 'button' to 'list'
+    type: 'list', //  from 'button' to 'list'
     body: { text: t('prompt_main_menu', lang) },
     action: {
       button: t('button_choose_option', lang), // Text for the button that opens the list
@@ -109,12 +109,12 @@ export const promptIncidentOrHelp = async (to: string, lang: Language) => {
 export const promptIncidentTime = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_incident_time', lang) }, // CHANGED
+    body: { text: t('prompt_incident_time', lang) }, //
     action: {
-      button: t('button_select_time'), // CHANGED
+      button: t('button_select_time'), //
       sections: [
         {
-          title: t('section_time_of_day', lang), // CHANGED
+          title: t('section_time_of_day', lang), //
           rows: [
             // IDs are the actual data values, titles use translation keys
             { id: 'Morning', title: t('option_morning', lang) },
@@ -133,12 +133,12 @@ export const promptIncidentTime = async (to: string, lang: Language) => {
 export const promptExactLocationType = async (to: string, lang: Language) => {
   const interactive = {
     type: 'list',
-    body: { text: t('prompt_location_specific', lang) }, // CHANGED
+    body: { text: t('prompt_location_specific', lang) },
     action: {
-      button: t('button_select_location'), // CHANGED
+      button: t('button_select_location'),
       sections: [
         {
-          title: t('section_location_types', lang), // CHANGED
+          title: t('section_location_types', lang),
           rows: [
             { id: 'Home', title: t('option_home', lang) },
             { id: 'School', title: t('option_school', lang) },
@@ -181,10 +181,10 @@ export const promptViolenceType = async (to: string, lang: Language) => {
 export const promptPerpetratorKnown = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('prompt_perpetrator_known', lang) }, // CHANGED
+    body: { text: t('prompt_perpetrator_known', lang) }, //
     action: {
       buttons: [
-        // CHANGED: Using consistent option keys for IDs
+        // : Using consistent option keys for IDs
         { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
         { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
       ]
@@ -227,10 +227,10 @@ export const promptPerpetratorRelationship = async (to: string, lang: Language) 
 export const promptMediaUpload = async (to: string, lang: Language) => {
   const interactive = {
     type: 'button',
-    body: { text: t('prompt_media_upload', lang) }, // CHANGED
+    body: { text: t('prompt_media_upload', lang) }, //
     action: {
       buttons: [
-        // CHANGED: Using consistent option keys for IDs
+        // : Using consistent option keys for IDs
         { type: 'reply', reply: { id: 'option_send_now', title: t('option_send_now', lang) } },
         { type: 'reply', reply: { id: 'option_skip', title: t('option_skip', lang) } }
       ]
@@ -247,10 +247,10 @@ export const promptHelpOrService = async (to: string, lang: Language, isDirectRe
     // Otherwise, ask if they need help
     const interactive = {
       type: 'button',
-      body: { text: t('prompt_need_support_incident', lang) }, // CHANGED
+      body: { text: t('prompt_need_support_incident', lang) }, //
       action: {
         buttons: [
-          // CHANGED: Using consistent option keys for IDs
+          // : Using consistent option keys for IDs
           { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
           { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
         ]
@@ -301,13 +301,13 @@ export const promptAddMoreServices = async (to: string, lang: Language) => {
 };
 
 export const promptConsent = async (to: string, lang: Language, isServiceRequest = false) => {
-  const textKey = isServiceRequest ? 'prompt_consent_direct_service' : 'prompt_consent'; // CHANGED
+  const textKey = isServiceRequest ? 'prompt_consent_direct_service' : 'prompt_consent'; //
   const interactive = {
     type: 'button',
     body: { text: t(textKey, lang) },
     action: {
       buttons: [
-        // CHANGED: Using consistent option keys for IDs
+        // : Using consistent option keys for IDs
         { type: 'reply', reply: { id: 'option_yes_consent', title: t('option_yes_consent', lang) } },
         { type: 'reply', reply: { id: 'option_no_consent', title: t('option_no_consent', lang) } }
       ]
@@ -322,7 +322,7 @@ export const promptFollowUpUpdates = async (to: string, lang: Language) => {
     body: { text: t('prompt_follow_up', lang) },
     action: {
       buttons: [
-        // CHANGED: Use consistent option IDs
+        // : Use consistent option IDs
         { type: 'reply', reply: { id: 'option_yes', title: t('option_yes', lang) } },
         { type: 'reply', reply: { id: 'option_no', title: t('option_no', lang) } }
       ]
