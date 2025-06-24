@@ -5,7 +5,7 @@ import IncidentReport from '../models/incidentReport.model';
 
 // GET /api/incidents - Get all incidents (with filtering, search, and pagination)
 export const getAllIncidents = asyncHandler(async (req: Request, res: Response) => {
-  const { status, violenceType, search } = req.query;
+  const { status, violenceType, areaCouncil, search } = req.query;
 
   // Build the query object
   const query: any = {};
@@ -15,6 +15,9 @@ export const getAllIncidents = asyncHandler(async (req: Request, res: Response) 
   }
   if (violenceType) {
     query.violenceType = violenceType;
+  }
+  if (areaCouncil) {
+    query.areaCouncil = areaCouncil;
   }
   if (search) {
     // Basic search across multiple fields using a case-insensitive regex
