@@ -53,7 +53,7 @@ export const processMessage = async (from: string, message: any, botPhoneNumberI
 
     case 'select_language':
       const lang = userResponseText.toLowerCase();
-      if (['English', 'Yoruba', 'Igbo', 'Hausa'].includes(lang)) {
+      if (['english', 'yoruba', 'igbo', 'hausa'].includes(lang)) {
         session.language = lang as Language;
         await WhatsAppService.sendTextMessage(from, t('confirmation_language_set', session.language, session.language));
         await WhatsAppService.promptAnonymity(from, session.language);

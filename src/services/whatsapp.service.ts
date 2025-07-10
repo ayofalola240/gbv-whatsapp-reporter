@@ -54,10 +54,10 @@ export const sendLanguageSelection = async (to: string) => {
           title: t('section_languages'),
           rows: [
             // These IDs are correct as they match the logic in the controller
-            { id: 'English', title: 'English' },
-            { id: 'Yoruba', title: 'Yoruba' },
-            { id: 'Igbo', title: 'Igbo' },
-            { id: 'Hausa', title: 'Hausa' }
+            { id: 'english', title: 'English' },
+            { id: 'yoruba', title: 'Yoruba' },
+            { id: 'igbo', title: 'Igbo' },
+            { id: 'hausa', title: 'Hausa' }
           ]
         }
       ]
